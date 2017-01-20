@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:text="Mike Dionisio"
+            android:layout_width="110dp"
+            android:layout_height="21dp"
+            android:id="@+id/friend_name"
+            android:textAlignment="center"
+            android:textStyle="normal|bold"
+            android:layout_below="@+id/friend_image"
+            android:layout_alignLeft="@+id/friend_image"
+            android:layout_alignStart="@+id/friend_image"
+            android:layout_marginTop="27dp" />
+
+        <TextView
+            android:text="Chivas Regal"
+            android:layout_width="110dp"
+            android:layout_height="21dp"
+            android:id="@+id/item_name"
+            android:textAlignment="center"
+            android:textStyle="normal|bold"
+            android:layout_alignBaseline="@+id/friend_name"
+            android:layout_alignBottom="@+id/friend_name"
+            android:layout_alignLeft="@+id/item_image"
+            android:layout_alignStart="@+id/item_image" />
+
+        <TextView
+            android:text="{{NAME OF USER TO DRINK}} is asking permission to drink your {{NAME OF DRINK}}. Would you like to accept?"
+            android:layout_height="65dp"
+            android:id="@+id/message"
+            android:textAlignment="center"
+            android:layout_below="@+id/friend_name"
+            android:layout_marginTop="29dp"
+            android:layout_width="250dp"
+            android:layout_alignLeft="@+id/friend_name"
+            android:layout_alignStart="@+id/friend_name"
+            android:layout_alignRight="@+id/item_name"
+            android:layout_alignEnd="@+id/item_name" />
+
+        <TextView
+            android:text="DECLINE"
+            android:layout_height="wrap_content"
+            android:id="@+id/decline"
+            android:textColor="@android:color/white"
+            android:textSize="24sp"
+            android:textAlignment="center"
+            android:paddingBottom="5dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:paddingTop="5dp"
+            android:layout_width="110dp"
+            android:background="@android:color/holo_red_light"
+            android:textStyle="normal|bold"
+            android:layout_below="@+id/message"
+            android:layout_alignLeft="@+id/friend_name"
+            android:layout_alignStart="@+id/friend_name"
+            android:layout_marginTop="41dp" />
+
+        <ImageView
+            android:id="@+id/friend_image"
+            android:background="@drawable/border"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            android:layout_marginLeft="45dp"
+            android:layout_marginStart="45dp"
+            android:layout_marginTop="74dp"
+            app:srcCompat="@mipmap/ic_launcher"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <ImageView
+            android:id="@+id/item_image"
+            android:background="@drawable/border"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            app:srcCompat="@mipmap/ic_launcher"
+            android:layout_alignTop="@+id/friend_image"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="46dp"
+            android:layout_marginEnd="46dp" />
+
+        <TextView
+            android:text="ACCEPT"
+            android:layout_height="wrap_content"
+            android:id="@+id/accept"
+            android:textColor="@android:color/white"
+            android:textSize="24sp"
+            android:textStyle="normal|bold"
+            android:textAlignment="center"
+            android:paddingBottom="5dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:paddingTop="5dp"
+            android:layout_width="110dp"
+            android:background="@android:color/holo_green_light"
+            android:layout_alignBaseline="@+id/decline"
+            android:layout_alignBottom="@+id/decline"
+            android:layout_alignRight="@+id/message"
+            android:layout_alignEnd="@+id/message" />
+
+    </RelativeLayout>
+</LinearLayout>
