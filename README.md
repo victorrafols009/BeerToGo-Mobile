@@ -1,2 +1,2 @@
-# BeerToGo-Mobile
+# DrinkToGo-Mobile
 Mobile Application of BeerToGo.
