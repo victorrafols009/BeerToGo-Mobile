@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimaryDark">
@@ -15,13 +15,12 @@
 
         <ImageView
             app:srcCompat="@mipmap/ic_launcher"
-            android:id="@+id/item_logo"
+            android:id="@+id/friend_logo"
             android:layout_weight="1"
             android:layout_width="150dp"
-            android:layout_height="80dp"
-            android:padding="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="5dp"/>
+            android:layout_height="match_parent"
+            android:padding="6dp"
+            android:layout_marginLeft="6dp"/>
 
         <LinearLayout
             android:orientation="vertical"
@@ -33,22 +32,22 @@
             android:paddingBottom="6dp">
 
             <TextView
-                android:text="Store Name"
+                android:text="Username"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/item_name"
+                android:paddingTop="15dp"
+                android:id="@+id/friend_name"
                 android:textStyle="normal|bold"
                 android:textSize="16sp"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:textColor="@color/colorAccent"
-                android:paddingTop="9dp"/>
+                android:textColor="@color/colorAccent"/>
 
             <TextView
-                android:text="Store Address"
+                android:text="Message here"
                 android:layout_width="match_parent"
-                android:layout_height="22dp"
-                android:id="@+id/item_brand"
+                android:layout_height="wrap_content"
+                android:id="@+id/friend_email"
                 android:layout_marginTop="5dp"
                 android:textSize="14sp"
                 android:maxLines="2"
@@ -56,17 +55,8 @@
                 android:minLines="2"
                 android:textColor="#97ffffff"/>
 
-            <TextView
-                android:text="Store contact"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/item_qty"
-                android:textSize="12sp"
-                android:textColor="#77ffffff"
-                android:textStyle="normal|bold|italic"
-                android:maxLines="1"
-                android:ellipsize="end"/>
-        </LinearLayout>
-    </LinearLayout>
+         </LinearLayout>
+
+     </LinearLayout>
 
 </LinearLayout>

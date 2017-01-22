@@ -37,7 +37,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/icon_beer_to_go"
+                app:srcCompat="@drawable/icon_drink_to_go"
                 android:id="@+id/imageView2" />
 
         </LinearLayout>
