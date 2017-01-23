@@ -7,14 +7,12 @@
             android:id="@+id/stores" />
         <item android:title="Scan QR Code"
             android:id="@+id/qrcode" />
-        <item android:title="Transactions"
-            android:id="@+id/transactions" />
-        <item android:title="Requests"
+        <item android:title="Notifications"
             android:id="@+id/request" />
         <item android:title="Friends"
             android:id="@+id/friends" />
-        <item android:title="Messages"
-            android:id="@+id/messages" />
+        <item android:title="Message"
+            android:id="@+id/message" />
     </group>
 
     <item>

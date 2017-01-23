@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.app.beertogo">
+    package="com.app.drinktogo">
 
     <!-- To access Google+ APIs: -->
     <uses-permission android:name="android.permission.INTERNET" />
@@ -16,7 +16,7 @@
         android:largeHeap="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".SplashActivity"
+            android:name="com.app.drinktogo.SplashActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
@@ -27,20 +27,20 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".LoginActivity"
+            android:name="com.app.drinktogo.LoginActivity"
             android:label="Login"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity
-            android:name=".MainActivity"
+            android:name="com.app.drinktogo.MainActivity"
             android:label="@string/title_activity_main"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".QRCodeActivity"
+            android:name="com.app.drinktogo.QRCodeActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".QRCodeGenerator"
+            android:name="com.app.drinktogo.QRCodeGenerator"
             android:screenOrientation="portrait" />
     </application>
 
