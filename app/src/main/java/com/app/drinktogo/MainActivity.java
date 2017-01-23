@@ -132,21 +132,6 @@ public class MainActivity extends AppCompatActivity
         Bundle args = new Bundle();
 
         switch (FRAGMENT_TAG){
-            case PROFILE_FRAGMENT:
-                ProfileFragment profileFragment = (ProfileFragment) getFragmentManager().findFragmentByTag(FRAGMENT_TAG);
-                try {
-                    args.putInt("user_id", user_json.getInt("id"));
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                if (profileFragment != null && profileFragment.isVisible()) {
-                    ft.replace(R.id.fragment_container, profileFragment, FRAGMENT_TAG);
-                }else{
-                    ProfileFragment frag = new ProfileFragment();
-                    frag.setArguments(args);
-                    ft.add(R.id.fragment_container, frag, FRAGMENT_TAG).addToBackStack(FRAGMENT_TAG);
-                }
-                break;
 
             case STORE_LIST_FRAGMENT:
                 StoreListFragment storeFragment = (StoreListFragment) getFragmentManager().findFragmentByTag(FRAGMENT_TAG);

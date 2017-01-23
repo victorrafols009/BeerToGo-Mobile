@@ -39,24 +39,6 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="149dp" />
 
-            <TextView
-                android:text="date created"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/date_created"
-                android:layout_weight="1"
-                android:textSize="12sp"
-                android:textColor="#79ffffff"
-                android:textStyle="normal|bold|italic"
-                android:maxLines="1"
-                android:ellipsize="end"
-                android:textAlignment="textStart"
-                android:layout_marginTop="15dp"
-                android:layout_below="@+id/user_banner"
-                android:layout_toRightOf="@+id/user_pic"
-                android:layout_marginLeft="10dp"
-                android:layout_marginStart="10dp" />
-
 
         </RelativeLayout>
 
@@ -68,6 +50,24 @@
             android:paddingTop="6dp"
             android:paddingLeft="10dp"
             android:paddingBottom="6dp">
+
+            <TextView
+                android:text="date created"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/date_created"
+                android:layout_weight="1"
+                android:textSize="12sp"
+                android:textColor="#79ffffff"
+                android:textStyle="normal|bold|italic"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:textAlignment="textEnd"
+                android:layout_marginTop="15dp"
+                android:layout_below="@+id/user_banner"
+                android:layout_toRightOf="@+id/user_pic"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp" />
 
             <TextView
                 android:text="Full Name"

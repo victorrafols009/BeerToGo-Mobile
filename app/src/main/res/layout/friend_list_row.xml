@@ -33,7 +33,7 @@
             android:paddingBottom="6dp">
 
             <TextView
-                android:text="Store Name"
+                android:text="Friend Name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/friend_name"
@@ -45,7 +45,7 @@
                 android:paddingTop="9dp"/>
 
             <TextView
-                android:text="Store Address"
+                android:text="Friend email"
                 android:layout_width="match_parent"
                 android:layout_height="21dp"
                 android:id="@+id/friend_email"
@@ -57,7 +57,7 @@
                 android:textColor="#97ffffff"/>
 
             <TextView
-                android:text="Store contact"
+                android:text="date joined"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/date_joined"

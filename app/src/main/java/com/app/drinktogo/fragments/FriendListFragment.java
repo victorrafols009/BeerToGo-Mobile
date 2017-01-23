@@ -65,7 +65,7 @@ public class FriendListFragment extends ListFragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        
+
 
         friendAdapter = new FriendAdapter(getActivity());
 

@@ -9,7 +9,7 @@ import android.support.v7.app.AlertDialog;
  */
 
 public class AppConfig {
-    public static final String URL = "http://beer2go.mybluemix.net/";
+    public static final String URL = "http://drinktogo.mybluemix.net/";
 
     public static void showDialog(Activity activity, String title, String message){
         AlertDialog.Builder dialog = new AlertDialog.Builder(activity);

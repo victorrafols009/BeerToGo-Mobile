@@ -2,6 +2,7 @@ package com.app.drinktogo.fragments;
 
 import android.app.Fragment;
 import android.app.ProgressDialog;
+import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -81,7 +82,7 @@ public class ProfileFragment extends Fragment {
                         try {
                             JSONObject o = response.getJSONObject(x);
                             full_name.setText(o.getString("full_name"));
-                            date_created.setText(o.getString("date_created"));
+                            date_created.setText("Since : " + o.getString("date_created_format"));
                             inventory_count.setText(o.getString("inventory_count"));
                             trans_count.setText(o.getString("transaction_count"));
                             friend_count.setText(o.getString("friend_count"));
@@ -99,9 +100,6 @@ public class ProfileFragment extends Fragment {
                 Log.d("Error : ", "" + throwable);
                 AppConfig.showDialog(getActivity(), "Message", "There is problem in your request. Please try again.");
             }
-
-
-
         });
     }
 }
