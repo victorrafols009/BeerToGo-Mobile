@@ -32,7 +32,7 @@
                 android:layout_height="100dp"
                 android:src="@drawable/ic_profile_pic"
                 android:scaleType="fitCenter"
-                android:id="@+id/user_pic"
+                android:id="@+id/user_logo"
                 android:layout_gravity="center_horizontal"
                 android:background="@drawable/profile_border"
                 android:layout_alignParentTop="true"
@@ -97,8 +97,7 @@
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="90dp"
-            android:layout_marginTop="5dp"
+            android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:background="@drawable/profile_icons_border">
 
@@ -107,12 +106,24 @@
                 android:layout_width="wrap_content"
                 android:layout_height="90dp">
 
-            <ImageView
-                android:src="@drawable/ic_friends"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:animationCache="true"
-                android:layout_gravity="center_horizontal"/>
+                <TextView
+                    android:id="@+id/friends_count"
+                    android:layout_width="20dip"
+                    android:layout_height="20dip"
+                    android:text="0"
+                    android:textColor="#ffffff"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:background="@drawable/circle"
+                    android:layout_gravity="top|right"
+                    android:backgroundTint="@color/cast_libraries_material_featurehighlight_outer_highlight_default_color" />
+
+                <ImageView
+                    android:src="@drawable/ic_friends"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:animationCache="true"
+                    android:layout_gravity="center_horizontal"/>
 
 
                 <TextView
@@ -132,6 +143,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="90dp">
 
+
+                <TextView
+                    android:id="@+id/inventory_count"
+                    android:layout_width="20dip"
+                    android:layout_height="20dip"
+                    android:text="0"
+                    android:textColor="#ffffff"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:background="@drawable/circle"
+                    android:layout_gravity="top|right"
+                    android:backgroundTint="@color/cast_libraries_material_featurehighlight_outer_highlight_default_color" />
 
                 <ImageView
                     android:src="@drawable/ic_inventory"
@@ -156,6 +179,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="90dp">
 
+
+                <TextView
+                    android:id="@+id/transaction_count"
+                    android:layout_width="20dip"
+                    android:layout_height="20dip"
+                    android:text="0"
+                    android:textColor="#ffffff"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:background="@drawable/circle"
+                    android:layout_gravity="top|right"
+                    android:backgroundTint="@color/cast_libraries_material_featurehighlight_outer_highlight_default_color" />
 
                 <ImageView
                     android:src="@drawable/ic_transactions"

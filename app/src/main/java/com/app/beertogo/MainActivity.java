@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.view.Gravity;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -15,11 +16,13 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.app.beertogo.Entity.User;
 import com.app.beertogo.fragments.FriendListFragment;
 import com.app.beertogo.fragments.StoreListFragment;
+import com.app.beertogo.fragments.ProfileFragment;
 import com.app.beertogo.helper.AppConfig;
 import com.app.beertogo.helper.DatabaseHandler;
 
@@ -36,7 +39,9 @@ public class MainActivity extends AppCompatActivity
 
     private TextView full_name;
     private TextView email;
+    private ImageView logo;
 
+    public static final String PROFILE_FRAGMENT = "PROFILE_FRAGMENT";
     public static final String STORE_LIST_FRAGMENT = "STORE_LIST_FRAGMENT";
     public static final String FRIEND_LIST_FRAGMENT = "FRIEND_LIST_FRAGMENT";
 
@@ -46,8 +51,9 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Home");
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        final DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
@@ -59,6 +65,15 @@ public class MainActivity extends AppCompatActivity
 
         full_name = (TextView) headerLayout.findViewById(R.id.full_name);
         email = (TextView) headerLayout.findViewById(R.id.email);
+        logo = (ImageView) headerLayout.findViewById(R.id.logo);
+//        logo.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                getSupportActionBar().setTitle("Your Profile");
+//                drawer.closeDrawer(GravityCompat.START);
+//                displayFragment(PROFILE_FRAGMENT);
+//            }
+//        });
 
         db = new DatabaseHandler(this);
         User user = db.getUser();
@@ -70,6 +85,8 @@ public class MainActivity extends AppCompatActivity
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
+//        displayFragment(PROFILE_FRAGMENT);
     }
 
     @Override
@@ -103,8 +120,10 @@ public class MainActivity extends AppCompatActivity
             startActivity(activity);
         }else if(id == R.id.friends){
             displayFragment(FRIEND_LIST_FRAGMENT);
+            getSupportActionBar().setTitle("Friend List");
         }else if(id == R.id.stores){
             displayFragment(STORE_LIST_FRAGMENT);
+            getSupportActionBar().setTitle("Store List");
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -119,6 +138,22 @@ public class MainActivity extends AppCompatActivity
         Bundle args = new Bundle();
 
         switch (FRAGMENT_TAG){
+            case PROFILE_FRAGMENT:
+                ProfileFragment profileFragment = (ProfileFragment) getFragmentManager().findFragmentByTag(FRAGMENT_TAG);
+                try {
+                    args.putInt("user_id", user_json.getInt("id"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                if (profileFragment != null && profileFragment.isVisible()) {
+                    ft.replace(R.id.fragment_container, profileFragment, FRAGMENT_TAG);
+                }else{
+                    ProfileFragment frag = new ProfileFragment();
+                    frag.setArguments(args);
+                    ft.add(R.id.fragment_container, frag, FRAGMENT_TAG).addToBackStack(FRAGMENT_TAG);
+                }
+                break;
+
             case STORE_LIST_FRAGMENT:
                 StoreListFragment storeFragment = (StoreListFragment) getFragmentManager().findFragmentByTag(FRAGMENT_TAG);
                 if (storeFragment != null && storeFragment.isVisible()) {

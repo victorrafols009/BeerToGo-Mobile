@@ -4,6 +4,7 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.ListFragment;
 import android.app.ProgressDialog;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,12 +12,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Adapter;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.app.beertogo.Adapter.StoreAdapter;
 import com.app.beertogo.Entity.Store;
 import com.app.beertogo.Entity.User;
 import com.app.beertogo.LoginActivity;
+import com.app.beertogo.MainActivity;
 import com.app.beertogo.R;
 import com.app.beertogo.helper.Ajax;
 import com.app.beertogo.helper.AppConfig;
@@ -32,6 +36,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
+
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
 /**
  * Created by Ken on 11/01/2017.
@@ -67,6 +73,12 @@ public class StoreListFragment extends ListFragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        ImageView imgView = new ImageView(getActivity());
+        imgView.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.ic_store));
+        imgView.setLayoutParams(new ListView.LayoutParams(ListView.LayoutParams.MATCH_PARENT, 600));
+        imgView.setScaleType(ImageView.ScaleType.FIT_XY);
+        this.getListView().addHeaderView(imgView);
 
         storeAdapter = new StoreAdapter(getActivity());
 

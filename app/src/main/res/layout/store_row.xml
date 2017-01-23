@@ -6,80 +6,66 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/colorPrimaryDark">
-    
+
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="200dp">
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:src="@drawable/ic_store"
-            android:scaleType="fitXY"/>
-
-    </LinearLayout>
-
-        <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="88dp"
+            android:layout_height="wrap_content"
             android:background="?android:attr/windowBackground"
             android:backgroundTint="@color/colorPrimaryDark">
 
-            <ImageView
-                app:srcCompat="@mipmap/ic_launcher"
-                android:id="@+id/store_logo"
-                android:layout_weight="1"
-                android:layout_width="150dp"
-                android:layout_height="80dp"
-                android:padding="5dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="5dp"/>
+        <ImageView
+            app:srcCompat="@mipmap/ic_launcher"
+            android:id="@+id/store_logo"
+            android:layout_weight="1"
+            android:layout_width="150dp"
+            android:layout_height="80dp"
+            android:padding="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"/>
 
-            <LinearLayout
-                android:orientation="vertical"
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingTop="6dp"
+            android:paddingLeft="10dp"
+            android:paddingBottom="6dp">
+
+            <TextView
+                android:text="Store Name"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:paddingTop="6dp"
-                android:paddingLeft="10dp"
-                android:paddingBottom="6dp">
+                android:layout_height="wrap_content"
+                android:id="@+id/store_name"
+                android:textStyle="normal|bold"
+                android:textSize="16sp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textColor="@color/colorAccent"
+                android:paddingTop="9dp"/>
 
-                <TextView
-                    android:text="Store Name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/store_name"
-                    android:textStyle="normal|bold"
-                    android:textSize="16sp"
-                    android:ellipsize="end"
-                    android:maxLines="1"
-                    android:textColor="@color/colorAccent"
-                    android:paddingTop="9dp"/>
+            <TextView
+                android:text="Store Address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/store_address"
+                android:layout_marginTop="5dp"
+                android:textSize="14sp"
+                android:ellipsize="end"
+                android:textColor="#97ffffff"/>
 
-                <TextView
-                    android:text="Store Address"
-                    android:layout_width="match_parent"
-                    android:layout_height="22dp"
-                    android:id="@+id/store_address"
-                    android:layout_marginTop="5dp"
-                    android:textSize="14sp"
-                    android:maxLines="2"
-                    android:ellipsize="end"
-                    android:minLines="2"
-                    android:textColor="#97ffffff"/>
-
-                <TextView
-                    android:text="Store contact"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/store_contact"
-                    android:textSize="12sp"
-                    android:textColor="#77ffffff"
-                    android:textStyle="normal|bold|italic"
-                    android:maxLines="1"
-                    android:ellipsize="end" />
-            </LinearLayout>
+            <TextView
+                android:text="Store contact"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/store_contact"
+                android:textSize="12sp"
+                android:textColor="#77ffffff"
+                android:textStyle="normal|bold|italic"
+                android:maxLines="1"
+                android:ellipsize="end" />
         </LinearLayout>
+    </LinearLayout>
 
 </LinearLayout>
