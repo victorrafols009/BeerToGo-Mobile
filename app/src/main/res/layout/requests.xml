@@ -14,8 +14,8 @@
         android:backgroundTint="@color/colorPrimaryDark">
 
         <ImageView
-            android:src="@drawable/ic_check"
-            android:id="@+id/friend_logo"
+            android:src="@drawable/ic_exclamation"
+            android:id="@+id/notif_logo"
             android:layout_weight="1"
             android:layout_width="150dp"
             android:layout_height="match_parent"

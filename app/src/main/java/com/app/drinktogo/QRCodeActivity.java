@@ -32,6 +32,8 @@ public class QRCodeActivity extends AppCompatActivity implements ZXingScannerVie
 
     @Override
     public void handleResult(Result result) {
+        
+
         Log.w("handeResult", result.getText());
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Scanned Result");

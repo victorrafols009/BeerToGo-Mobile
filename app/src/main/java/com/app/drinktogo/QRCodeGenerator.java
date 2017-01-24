@@ -29,16 +29,20 @@ public class QRCodeGenerator extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.qr_code_display);
 
-        qrcontent = (EditText) findViewById(R.id.qrtext);
-        qrshow = (Button) findViewById(R.id.qrshow);
+//        qrcontent = (EditText) findViewById(R.id.qrtext);
+//        qrshow = (Button) findViewById(R.id.qrshow);
         qrdisplay = (ImageView) findViewById(R.id.qrdisplay);
 
-        qrshow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        String qrcontent = getIntent().getStringExtra("qr_code_command");
+
+//        qrshow.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
                 MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
                 try{
-                    BitMatrix bitMatrix = multiFormatWriter.encode(qrcontent.getText().toString(), BarcodeFormat.QR_CODE,200,200);
+
+//                    BitMatrix bitMatrix = multiFormatWriter.encode(qrcontent.getText().toString(), BarcodeFormat.QR_CODE,200,200);
+                    BitMatrix bitMatrix = multiFormatWriter.encode(qrcontent, BarcodeFormat.QR_CODE,200,200);
                     BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
                     Bitmap bitmap = barcodeEncoder.createBitmap(bitMatrix);
                     qrdisplay.setImageBitmap(bitmap);
@@ -46,7 +50,7 @@ public class QRCodeGenerator extends AppCompatActivity {
                 catch (WriterException e){
                     e.printStackTrace();
                 }
-            }
-        });
+//            }
+//        });
     }
 }
