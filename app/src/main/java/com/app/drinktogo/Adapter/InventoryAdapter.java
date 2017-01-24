@@ -72,6 +72,9 @@ public class InventoryAdapter extends BaseAdapter {
         }
         Inventory i = inventories.get(position);
         holder.inventory = i;
+        holder.name.setText(i.name);
+        holder.brand.setText(i.brand);
+        holder.qty.setText("");
         // TODO: set logo
         // holder.logo ??
         return convertView;

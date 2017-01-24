@@ -42,7 +42,7 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View  view = inflater.inflate(R.layout.friend_profile, container, false);
+        View  view = inflater.inflate(R.layout.user_profile, container, false);
         user_id = getArguments().getInt("user_id");
 
         user_logo = (ImageView) view.findViewById(R.id.user_logo);
@@ -83,7 +83,7 @@ public class ProfileFragment extends Fragment {
                             full_name.setText(o.getString("full_name"));
                             date_created.setText("Since : " + o.getString("date_created_format"));
                             inventory_count.setText(o.getString("inventory_count"));
-                            trans_count.setText(o.getString("transaction_count"));
+                            trans_count.setText("0"); //set value if messages is okay already
                             friend_count.setText(o.getString("friend_count"));
                             email.setText(o.getString("email"));
                         } catch (JSONException e) {

@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity
     public static final String PROFILE_FRAGMENT = "PROFILE_FRAGMENT";
     public static final String STORE_LIST_FRAGMENT = "STORE_LIST_FRAGMENT";
     public static final String FRIEND_LIST_FRAGMENT = "FRIEND_LIST_FRAGMENT";
+    public static final String FRIEND_FRAGMENT = "FRIEND_FRAGMENT";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,14 +61,14 @@ public class MainActivity extends AppCompatActivity
         full_name = (TextView) headerLayout.findViewById(R.id.full_name);
         email = (TextView) headerLayout.findViewById(R.id.email);
         logo = (ImageView) headerLayout.findViewById(R.id.logo);
-//        logo.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                getSupportActionBar().setTitle("Your Profile");
-//                drawer.closeDrawer(GravityCompat.START);
-//                displayFragment(PROFILE_FRAGMENT);
-//            }
-//        });
+        logo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                displayFragment(PROFILE_FRAGMENT);
+                getSupportActionBar().setTitle("Your Profile");
+                    drawer.closeDrawer(GravityCompat.START);
+            }
+        });
 
         db = new DatabaseHandler(this);
         User user = db.getUser();
@@ -76,11 +77,12 @@ public class MainActivity extends AppCompatActivity
             user_json = data;
             full_name.setText(data.getString("full_name"));
             email.setText(data.getString("email"));
+            getSupportActionBar().setTitle("Your Profile");
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-//        displayFragment(PROFILE_FRAGMENT);
+        displayFragment(PROFILE_FRAGMENT);
     }
 
     @Override
@@ -132,6 +134,22 @@ public class MainActivity extends AppCompatActivity
         Bundle args = new Bundle();
 
         switch (FRAGMENT_TAG){
+
+            case PROFILE_FRAGMENT:
+                ProfileFragment profileFragment = (ProfileFragment) getFragmentManager().findFragmentByTag(FRAGMENT_TAG);
+                try {
+                    args.putInt("user_id", user_json.getInt("id"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                if (profileFragment != null && profileFragment.isVisible()) {
+                    ft.replace(R.id.fragment_container, profileFragment, FRAGMENT_TAG);
+                }else{
+                    ProfileFragment frag = new ProfileFragment();
+                    frag.setArguments(args);
+                    ft.add(R.id.fragment_container, frag, FRAGMENT_TAG).addToBackStack(FRAGMENT_TAG);
+                }
+                break;
 
             case STORE_LIST_FRAGMENT:
                 StoreListFragment storeFragment = (StoreListFragment) getFragmentManager().findFragmentByTag(FRAGMENT_TAG);

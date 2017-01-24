@@ -45,16 +45,16 @@ public class FriendListFragment extends ListFragment {
 
         FragmentManager fm = getActivity().getFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
-        ProfileFragment myFragment = (ProfileFragment)getFragmentManager().findFragmentByTag("PROFILE_FRAGMENT");
+        FriendFragment myFragment = (FriendFragment)getFragmentManager().findFragmentByTag("FRIEND_FRAGMENT");
         Bundle args = new Bundle();
         args.putInt("user_id", f.friend_id);
         if (myFragment != null && myFragment.isVisible()) {
             myFragment.setArguments(args);
-            ft.replace(R.id.fragment_container, myFragment, "PROFILE_FRAGMENT");
+            ft.replace(R.id.fragment_container, myFragment, "FRIEND_FRAGMENT");
         }else{
-            ProfileFragment frag = new ProfileFragment();
+            FriendFragment frag = new FriendFragment();
             frag.setArguments(args);
-            ft.add(R.id.fragment_container, frag, "PROFILE_FRAGMENT").addToBackStack("PROFILE_FRAGMENT");
+            ft.add(R.id.fragment_container, frag, "FRIEND_FRAGMENT").addToBackStack("FRIEND_FRAGMENT");
         }
         ft.commit();
 

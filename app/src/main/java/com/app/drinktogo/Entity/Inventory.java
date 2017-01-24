@@ -11,4 +11,6 @@ public class Inventory {
     public int store_id;
     public int is_empty;
     public String date_stored;
+    public String name;
+    public String brand;
 }
