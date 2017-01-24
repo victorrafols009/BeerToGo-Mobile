@@ -106,35 +106,50 @@
                 android:layout_width="wrap_content"
                 android:layout_height="90dp">
 
-                <TextView
-                    android:id="@+id/friends_count"
-                    android:layout_width="20dip"
-                    android:layout_height="20dip"
-                    android:text="0"
-                    android:textColor="#ffffff"
-                    android:textStyle="bold"
-                    android:gravity="center"
-                    android:background="@drawable/circle"
-                    android:layout_gravity="top|right"
-                    android:backgroundTint="@color/cast_libraries_material_featurehighlight_outer_highlight_default_color" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-                <ImageView
-                    android:src="@drawable/ic_friends"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:animationCache="true"
-                    android:layout_gravity="center_horizontal"/>
+                    <TextView
+                        android:text="Friends"
+                        android:layout_width="120dp"
+                        android:layout_height="28dp"
+                        android:textColor="@color/colorAccent"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:layout_gravity="center_horizontal"
+                        android:gravity="center"
+                        android:textSize="13sp"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:id="@+id/textView4" />
 
+                    <ImageView
+                        android:src="@drawable/ic_friends"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:animationCache="true"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_below="@+id/friends_count"
+                        android:layout_centerHorizontal="true"
+                        android:id="@+id/imageView6" />
 
-                <TextView
-                    android:text="Friends"
-                    android:layout_width="120dp"
-                    android:layout_height="28dp"
-                    android:textColor="@color/colorAccent"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:layout_gravity="center_horizontal"
-                    android:gravity="center"
-                    android:textSize="13sp"/>
+                    <TextView
+                        android:id="@+id/friends_count"
+                        android:layout_width="20dip"
+                        android:layout_height="20dip"
+                        android:text="0"
+                        android:textColor="#ffffff"
+                        android:textStyle="bold"
+                        android:gravity="center"
+                        android:background="@drawable/circle"
+                        android:layout_gravity="top|right"
+                        android:backgroundTint="@color/cast_libraries_material_featurehighlight_outer_highlight_default_color"
+                        android:layout_alignParentTop="true"
+                        android:layout_toRightOf="@+id/imageView6"
+                        android:layout_toEndOf="@+id/imageView6" />
+
+                </RelativeLayout>
 
             </LinearLayout>
 
@@ -143,35 +158,50 @@
                 android:layout_width="wrap_content"
                 android:layout_height="90dp">
 
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-                <TextView
-                    android:id="@+id/inventory_count"
-                    android:layout_width="20dip"
-                    android:layout_height="20dip"
-                    android:text="0"
-                    android:textColor="#ffffff"
-                    android:textStyle="bold"
-                    android:gravity="center"
-                    android:background="@drawable/circle"
-                    android:layout_gravity="top|right"
-                    android:backgroundTint="@color/cast_libraries_material_featurehighlight_outer_highlight_default_color" />
+                    <TextView
+                        android:text="Inventory"
+                        android:layout_width="120dp"
+                        android:layout_height="28dp"
+                        android:textColor="@color/colorAccent"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:layout_gravity="center_horizontal"
+                        android:gravity="center"
+                        android:textSize="13sp"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:id="@+id/textView5" />
 
-                <ImageView
-                    android:src="@drawable/ic_inventory"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:animationCache="true"
-                    android:layout_gravity="center_horizontal"/>
+                    <ImageView
+                        android:src="@drawable/ic_inventory"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:animationCache="true"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_below="@+id/inventory_count"
+                        android:layout_centerHorizontal="true"
+                        android:id="@+id/imageView7" />
 
-                <TextView
-                    android:text="Inventory"
-                    android:layout_width="120dp"
-                    android:layout_height="28dp"
-                    android:textColor="@color/colorAccent"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:layout_gravity="center_horizontal"
-                    android:gravity="center"
-                    android:textSize="13sp" />
+                    <TextView
+                        android:id="@+id/inventory_count"
+                        android:layout_width="20dip"
+                        android:layout_height="20dip"
+                        android:text="0"
+                        android:textColor="#ffffff"
+                        android:textStyle="bold"
+                        android:gravity="center"
+                        android:background="@drawable/circle"
+                        android:layout_gravity="top|right"
+                        android:backgroundTint="@color/cast_libraries_material_featurehighlight_outer_highlight_default_color"
+                        android:layout_alignParentTop="true"
+                        android:layout_toRightOf="@+id/imageView7"
+                        android:layout_toEndOf="@+id/imageView7" />
+
+                </RelativeLayout>
 
             </LinearLayout>
             <LinearLayout
@@ -179,35 +209,50 @@
                 android:layout_width="wrap_content"
                 android:layout_height="90dp">
 
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-                <TextView
-                    android:id="@+id/transaction_count"
-                    android:layout_width="20dip"
-                    android:layout_height="20dip"
-                    android:text="0"
-                    android:textColor="#ffffff"
-                    android:textStyle="bold"
-                    android:gravity="center"
-                    android:background="@drawable/circle"
-                    android:layout_gravity="top|right"
-                    android:backgroundTint="@color/cast_libraries_material_featurehighlight_outer_highlight_default_color" />
+                    <TextView
+                        android:text="Transactions"
+                        android:layout_width="120dp"
+                        android:layout_height="28dp"
+                        android:textColor="@color/colorAccent"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:layout_gravity="center_horizontal"
+                        android:gravity="center"
+                        android:textSize="13sp"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:id="@+id/textView6" />
 
-                <ImageView
-                    android:src="@drawable/ic_transactions"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:animationCache="true"
-                    android:layout_gravity="center_horizontal"/>
+                    <ImageView
+                        android:src="@drawable/ic_transactions"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:animationCache="true"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_below="@+id/transaction_count"
+                        android:layout_centerHorizontal="true"
+                        android:id="@+id/imageView8" />
 
-                <TextView
-                    android:text="Transactions"
-                    android:layout_width="120dp"
-                    android:layout_height="28dp"
-                    android:textColor="@color/colorAccent"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:layout_gravity="center_horizontal"
-                    android:gravity="center"
-                    android:textSize="13sp"/>
+                    <TextView
+                        android:id="@+id/transaction_count"
+                        android:layout_width="20dip"
+                        android:layout_height="20dip"
+                        android:text="0"
+                        android:textColor="#ffffff"
+                        android:textStyle="bold"
+                        android:gravity="center"
+                        android:background="@drawable/circle"
+                        android:layout_gravity="top|right"
+                        android:backgroundTint="@color/cast_libraries_material_featurehighlight_outer_highlight_default_color"
+                        android:layout_alignParentTop="true"
+                        android:layout_toRightOf="@+id/imageView8"
+                        android:layout_toEndOf="@+id/imageView8" />
+
+                </RelativeLayout>
 
             </LinearLayout>
 
