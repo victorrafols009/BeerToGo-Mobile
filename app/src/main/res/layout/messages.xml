@@ -13,14 +13,15 @@
         android:background="?android:attr/windowBackground"
         android:backgroundTint="@color/colorPrimaryDark">
 
-        <ImageView
-            app:srcCompat="@mipmap/ic_launcher"
-            android:id="@+id/friend_logo"
-            android:layout_weight="1"
-            android:layout_width="150dp"
-            android:layout_height="match_parent"
-            android:padding="6dp"
-            android:layout_marginLeft="6dp"/>
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profile_image"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/ic_user_image"
+            app:civ_border_width="2dp"
+            app:civ_border_color="#ffffff"/>
 
         <LinearLayout
             android:orientation="vertical"
