@@ -2,7 +2,6 @@ package com.app.drinktogo.fragments;
 
 import android.app.Fragment;
 import android.app.ProgressDialog;
-import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -43,7 +42,7 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View  view = inflater.inflate(R.layout.user_profile, container, false);
+        View  view = inflater.inflate(R.layout.friend_profile, container, false);
         user_id = getArguments().getInt("user_id");
 
         user_logo = (ImageView) view.findViewById(R.id.user_logo);

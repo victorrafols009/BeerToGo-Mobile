@@ -1,6 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="88dp"
+        android:background="?android:attr/windowBackground"
+        android:backgroundTint="@color/colorPrimaryDark">
+
+        <ImageView
+            android:src="@drawable/ic_check"
+            android:id="@+id/friend_logo"
+            android:layout_weight="1"
+            android:layout_width="150dp"
+            android:layout_height="match_parent"
+            android:padding="10dp"
+            android:layout_marginLeft="6dp"/>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:paddingTop="6dp"
+            android:paddingLeft="10dp"
+            android:paddingBottom="6dp">
+
+            <TextView
+                android:text="Description"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:id="@+id/friend_name"
+                android:layout_marginTop="15dp"
+                android:textStyle="normal|bold"
+                android:textSize="16sp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textColor="@color/colorAccent"/>
+
+            <TextView
+                android:text="Time and Date"
+                android:layout_width="match_parent"
+                android:layout_height="18dp"
+                android:id="@+id/friend_email"
+                android:layout_marginTop="5dp"
+                android:textSize="14sp"
+                android:maxLines="2"
+                android:ellipsize="end"
+                android:minLines="2"
+                android:textColor="#97ffffff"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 </LinearLayout>
