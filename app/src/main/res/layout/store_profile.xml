@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?android:attr/windowBackground"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:backgroundTint="@color/colorPrimaryDark">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ImageView
+                android:src="@drawable/ic_available_drinks_banner"
+                android:id="@+id/user_banner"
+                android:layout_width="match_parent"
+                android:scaleType="fitXY"
+                android:layout_height="200dp"
+                android:tint="#80000000"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+
+            <TextView
+                android:text="Address"
+                android:textColor="#97ffffff"
+                android:layout_width="250dp"
+                android:layout_height="20dp"
+                android:textSize="12dp"
+                android:id="@+id/address_of_store"
+                android:layout_below="@+id/name_of_store"
+                android:layout_alignLeft="@+id/name_of_store"
+                android:layout_alignStart="@+id/name_of_store" />
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/icon_drink_to_go"
+                android:id="@+id/store_logo"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="14dp"
+                android:layout_marginEnd="14dp"
+                android:layout_alignParentTop="true"
+                android:layout_toLeftOf="@+id/name_of_store"
+                android:layout_toStartOf="@+id/name_of_store" />
+
+            <TextView
+                android:text="Store Name"
+                android:textColor="@color/colorAccent"
+                android:textStyle="normal|bold"
+                android:layout_width="200dp"
+                android:layout_height="20dp"
+                android:id="@+id/name_of_store"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:layout_marginTop="5dp"
+                android:layout_alignTop="@+id/store_logo"
+                android:layout_centerHorizontal="true" />
+
+
+        </RelativeLayout>
+    </LinearLayout>
+</LinearLayout>

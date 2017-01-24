@@ -62,7 +62,7 @@ public class StoreListFragment extends ListFragment {
 
         ImageView imgView = new ImageView(getActivity());
         imgView.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.ic_store));
-        imgView.setLayoutParams(new ListView.LayoutParams(ListView.LayoutParams.MATCH_PARENT, 400));
+        imgView.setLayoutParams(new ListView.LayoutParams(ListView.LayoutParams.MATCH_PARENT, 600));
         imgView.setScaleType(ImageView.ScaleType.FIT_XY);
         this.getListView().addHeaderView(imgView);
 
