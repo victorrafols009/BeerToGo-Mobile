@@ -1,10 +1,12 @@
 package com.app.drinktogo.fragments;
 
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.ListFragment;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,10 +19,13 @@ import android.widget.TextView;
 import com.app.drinktogo.Adapter.InventoryAdapter;
 import com.app.drinktogo.Adapter.StoreAdapter;
 import com.app.drinktogo.Entity.Inventory;
+import com.app.drinktogo.Entity.User;
 import com.app.drinktogo.R;
 import com.app.drinktogo.helper.Ajax;
 import com.app.drinktogo.helper.AppConfig;
+import com.app.drinktogo.helper.DatabaseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -44,6 +49,9 @@ public class FriendFragment extends ListFragment {
     private TextView trans_count;
     private TextView date_created;
 
+    private DatabaseHandler db;
+    private int curr_user_id;
+
     InventoryAdapter inventoryAdapter;
 
     @Override
@@ -53,6 +61,16 @@ public class FriendFragment extends ListFragment {
         View view = inflater.inflate(R.layout.fragment_list, container, false);
 
         headerView = inflater.inflate(R.layout.friend_profile, null, false);
+
+        db = new DatabaseHandler(getActivity());
+        User user = db.getUser();
+        JSONObject data = user.record();
+        try {
+            curr_user_id = data.getInt("id");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
         user_id = getArguments().getInt("user_id");
 
         user_logo = (ImageView) headerView.findViewById(R.id.user_logo);
@@ -68,9 +86,71 @@ public class FriendFragment extends ListFragment {
 
     public void onListItemClick(ListView l, View v, int position, long id) {
         InventoryAdapter.ViewHolder view = (InventoryAdapter.ViewHolder) v.getTag();
-        Inventory f = view.inventory;
+        final Inventory i = view.inventory;
 
-        AppConfig.showDialog(getActivity(), "adf", f.name);
+        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which){
+                    case DialogInterface.BUTTON_POSITIVE:
+                        final ProgressDialog progress = new ProgressDialog(getActivity());
+                        progress.setMessage("Logging in...");
+                        progress.setIndeterminate(false);
+                        progress.setCancelable(false);
+
+                        RequestParams data = new RequestParams();
+                        data.add("user_id", Integer.toString(user_id));
+                        data.add("friend_id", Integer.toString(curr_user_id));
+                        data.add("inventory_id", Integer.toString(i.item_id));
+                        data.add("store_id", Integer.toString(i.store_id));
+
+                        Ajax.post("transaction/new", data, new JsonHttpResponseHandler(){
+                            @Override
+                            public void onStart() {
+                                progress.show();
+                            }
+
+                            @Override
+                            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                                if (statusCode == 200) {
+                                    if(response.length() > 0){
+                                        AppConfig.showDialog(getActivity(), "Message", "Successfully requested to drink!");
+                                    }else{
+                                        AppConfig.showDialog(getActivity(), "Message", "Request not send. Sorry. :(");
+                                    }
+                                } else {
+                                    AppConfig.showDialog(getActivity(), "Message", "There is problem in your request. Please try again.");
+                                }
+                                Log.d("Result", response.toString());
+                            }
+
+                            @Override
+                            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                                Log.d("Failed: ", ""+statusCode);
+                                Log.d("Error : ", "" + throwable);
+                                AppConfig.showDialog(getActivity(), "Message", "There is problem in your request. Please try again.");
+                            }
+
+                            @Override
+                            public void onFinish() {
+                                progress.dismiss();
+                            }
+                        });
+                        break;
+
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        dialog.dismiss();
+                        break;
+                }
+            }
+        };
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Request Confirmation")
+                .setMessage("Send request to drink this " + i.name + "?")
+                .setPositiveButton("Yes", dialogClickListener)
+                .setNegativeButton("No", dialogClickListener)
+                .show();
     }
 
     @Override
