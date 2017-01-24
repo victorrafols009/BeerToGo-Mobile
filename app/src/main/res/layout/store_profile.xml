@@ -67,7 +67,23 @@
                 android:layout_alignTop="@+id/store_logo"
                 android:layout_centerHorizontal="true" />
 
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="308dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true">
+
+                <ListView
+                    android:id="@+id/list_alcohol"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent">
+                </ListView>
+            </LinearLayout>
+
 
         </RelativeLayout>
+
     </LinearLayout>
 </LinearLayout>
