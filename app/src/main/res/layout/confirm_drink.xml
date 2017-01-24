@@ -12,7 +12,7 @@
             android:text="Mike Dionisio"
             android:layout_width="110dp"
             android:layout_height="21dp"
-            android:id="@+id/friend_name"
+            android:id="@+id/request_description"
             android:textAlignment="center"
             android:textStyle="normal|bold"
             android:layout_below="@+id/friend_image"
@@ -27,8 +27,8 @@
             android:id="@+id/item_name"
             android:textAlignment="center"
             android:textStyle="normal|bold"
-            android:layout_alignBaseline="@+id/friend_name"
-            android:layout_alignBottom="@+id/friend_name"
+            android:layout_alignBaseline="@+id/request_description"
+            android:layout_alignBottom="@+id/request_description"
             android:layout_alignLeft="@+id/item_image"
             android:layout_alignStart="@+id/item_image" />
 
@@ -37,11 +37,11 @@
             android:layout_height="65dp"
             android:id="@+id/message"
             android:textAlignment="center"
-            android:layout_below="@+id/friend_name"
+            android:layout_below="@+id/request_description"
             android:layout_marginTop="29dp"
             android:layout_width="250dp"
-            android:layout_alignLeft="@+id/friend_name"
-            android:layout_alignStart="@+id/friend_name"
+            android:layout_alignLeft="@+id/request_description"
+            android:layout_alignStart="@+id/request_description"
             android:layout_alignRight="@+id/item_name"
             android:layout_alignEnd="@+id/item_name" />
 
@@ -60,8 +60,8 @@
             android:background="@android:color/holo_red_light"
             android:textStyle="normal|bold"
             android:layout_below="@+id/message"
-            android:layout_alignLeft="@+id/friend_name"
-            android:layout_alignStart="@+id/friend_name"
+            android:layout_alignLeft="@+id/request_description"
+            android:layout_alignStart="@+id/request_description"
             android:layout_marginTop="41dp" />
 
         <ImageView

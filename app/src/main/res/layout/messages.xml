@@ -37,7 +37,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingTop="15dp"
-                android:id="@+id/friend_name"
+                android:id="@+id/request_description"
                 android:textStyle="normal|bold"
                 android:textSize="16sp"
                 android:ellipsize="end"

@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.app.drinktogo.Entity.User;
 import com.app.drinktogo.fragments.FriendListFragment;
+import com.app.drinktogo.fragments.NotificationFragment;
 import com.app.drinktogo.fragments.StoreListFragment;
 import com.app.drinktogo.fragments.ProfileFragment;
 import com.app.drinktogo.helper.AppConfig;
@@ -39,6 +40,7 @@ public class MainActivity extends AppCompatActivity
     public static final String STORE_LIST_FRAGMENT = "STORE_LIST_FRAGMENT";
     public static final String FRIEND_LIST_FRAGMENT = "FRIEND_LIST_FRAGMENT";
     public static final String FRIEND_FRAGMENT = "FRIEND_FRAGMENT";
+    public static final String NOTIFICATION_FRAGMENT = "NOTIFICATION_FRAGMENT";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,6 +122,9 @@ public class MainActivity extends AppCompatActivity
         }else if(id == R.id.stores){
             displayFragment(STORE_LIST_FRAGMENT);
             getSupportActionBar().setTitle("Store List");
+        } else if(id == R.id.request) {
+            displayFragment(NOTIFICATION_FRAGMENT);
+            getSupportActionBar().setTitle("Notifications");
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -134,6 +139,22 @@ public class MainActivity extends AppCompatActivity
         Bundle args = new Bundle();
 
         switch (FRAGMENT_TAG){
+
+            case NOTIFICATION_FRAGMENT:
+                NotificationFragment notificationFragment = (NotificationFragment) getFragmentManager().findFragmentByTag(FRAGMENT_TAG);
+                try {
+                    args.putInt("user_id", user_json.getInt("id"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                if (notificationFragment != null && notificationFragment.isVisible()) {
+                    ft.replace(R.id.fragment_container, notificationFragment, FRAGMENT_TAG);
+                }else{
+                    NotificationFragment frag = new NotificationFragment();
+                    frag.setArguments(args);
+                    ft.add(R.id.fragment_container, frag, FRAGMENT_TAG).addToBackStack(FRAGMENT_TAG);
+                }
+                break;
 
             case PROFILE_FRAGMENT:
                 ProfileFragment profileFragment = (ProfileFragment) getFragmentManager().findFragmentByTag(FRAGMENT_TAG);

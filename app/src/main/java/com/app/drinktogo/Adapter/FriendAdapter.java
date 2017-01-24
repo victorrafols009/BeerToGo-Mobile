@@ -61,7 +61,7 @@ public class FriendAdapter extends BaseAdapter {
         if (convertView == null) {
             holder = new ViewHolder();
             convertView = mInflater.inflate(R.layout.friend_list_row, null);
-            holder.name = (TextView)convertView.findViewById(R.id.friend_name);
+            holder.name = (TextView)convertView.findViewById(R.id.request_description);
             holder.email = (TextView)convertView.findViewById(R.id.friend_email);
             holder.date_joined = (TextView)convertView.findViewById(R.id.date_joined);
             holder.logo = (ImageView) convertView.findViewById(R.id.friend_logo);
