@@ -55,9 +55,9 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if(isValidEmail(email.getText().toString())){
 
-                    RequestParams data = new RequestParams();
-                    data.add("email", email.getText().toString());
-                    data.add("password", password.getText().toString());
+                        RequestParams data = new RequestParams();
+                        data.add("email", email.getText().toString());
+                        data.add("password", password.getText().toString());
 
                     Ajax.post("auth/login", data, new JsonHttpResponseHandler(){
                         @Override

@@ -38,10 +38,12 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="com.app.drinktogo.QRCodeActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name="com.app.drinktogo.QRCodeGenerator"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

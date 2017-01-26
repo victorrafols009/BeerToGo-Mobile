@@ -1,8 +1,7 @@
 package com.app.drinktogo.fragments;
 
 import android.app.AlertDialog;
-import android.app.Fragment;
-import android.app.ListFragment;
+import android.support.v4.app.ListFragment;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -16,6 +15,7 @@ import android.widget.ListView;
 
 import com.app.drinktogo.Adapter.NotificationAdapter;
 import com.app.drinktogo.Entity.Notification;
+import com.app.drinktogo.MainActivity;
 import com.app.drinktogo.QRCodeGenerator;
 import com.app.drinktogo.R;
 import com.app.drinktogo.helper.Ajax;
@@ -119,22 +119,19 @@ public class NotificationFragment extends ListFragment {
             JSONObject o = new JSONObject();
             try {
                 o.put("id", Integer.toString(n.id));
-                o.put("user_id", Integer.toString(n.user_id));
-                o.put("friend_id", Integer.toString(n.friend_id));
-                o.put("date_accepted", n.request_date);
             } catch(JSONException e) {
                 e.printStackTrace();
             }
 
             RequestParams data = new RequestParams();
-            data.add("qr_cmd", o.toString());
+            data.add("json_value", o.toString());
 
             Ajax.post("encrypt", data, new JsonHttpResponseHandler() {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                         try {
                             Intent i = new Intent(getActivity(), QRCodeGenerator.class);
-                            i.putExtra("qr_code_command", response.getString("encrypted_qr_cmd"));
+                            i.putExtra("qr_code", response.getString("encrypted_json"));
                             startActivity(i);
                         } catch (JSONException e) {
                             e.printStackTrace();

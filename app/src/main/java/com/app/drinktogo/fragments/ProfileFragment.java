@@ -1,8 +1,9 @@
 package com.app.drinktogo.fragments;
 
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.app.drinktogo.MainActivity;
 import com.app.drinktogo.R;
 import com.app.drinktogo.helper.Ajax;
 import com.app.drinktogo.helper.AppConfig;

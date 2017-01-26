@@ -1,6 +1,6 @@
 package com.app.drinktogo.fragments;
 
-import android.app.ListFragment;
+import android.support.v4.app.ListFragment;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,6 +12,7 @@ import com.app.drinktogo.Adapter.FriendAdapter;
 import com.app.drinktogo.Adapter.ItemAdapter;
 import com.app.drinktogo.Entity.Friend;
 import com.app.drinktogo.Entity.Item;
+import com.app.drinktogo.MainActivity;
 import com.app.drinktogo.R;
 import com.app.drinktogo.helper.Ajax;
 import com.app.drinktogo.helper.AppConfig;
