@@ -1,10 +1,16 @@
 package com.app.drinktogo;
 
+import android.*;
+import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -135,14 +141,32 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if(id == R.id.logout){
-            AppConfig.showDialog(MainActivity.this, "Message", "Logout");
-            db.delete();
-            Intent activity= new Intent(MainActivity.this, LoginActivity.class);
-            startActivity(activity);
-            finish();
+            DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    switch (which){
+                        case DialogInterface.BUTTON_POSITIVE:
+                            db.delete();
+                            Intent activity= new Intent(MainActivity.this, LoginActivity.class);
+                            startActivity(activity);
+                            finish();
+                            break;
+
+                        case DialogInterface.BUTTON_NEGATIVE:
+                            dialog.dismiss();
+                            break;
+                    }
+                }
+            };
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+            builder.setTitle("Confirmation")
+                    .setMessage("Are you sure you want to log out?")
+                    .setPositiveButton("Yes", dialogClickListener)
+                    .setNegativeButton("No", dialogClickListener)
+                    .show();
         }else if(id == R.id.qrcode) {
-            Intent activity = new Intent(MainActivity.this, QRCodeActivity.class);
-            startActivity(activity);
+            verifyCameraPermission(MainActivity.this);
         }else if(id == R.id.friends){
             displayFragment(FRIEND_LIST_FRAGMENT);
             getSupportActionBar().setTitle("Friend List");
@@ -225,5 +249,41 @@ public class MainActivity extends AppCompatActivity
                 break;
         }
         ft.commit();
+    }
+
+    private static final int REQUEST_CAMERA = 1;
+    private static String[] PERMISSION_CAMERA = {
+            android.Manifest.permission.CAMERA
+    };
+
+    public void verifyCameraPermission(Activity activity) {
+        int permission = ActivityCompat.checkSelfPermission(activity, android.Manifest.permission.CAMERA);
+
+        if (permission != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(
+                    activity,
+                    PERMISSION_CAMERA,
+                    REQUEST_CAMERA
+            );
+        } else {
+            Intent i = new Intent(MainActivity.this, QRCodeActivity.class);
+            startActivity(i);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case 1: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Intent activity = new Intent(MainActivity.this, QRCodeActivity.class);
+                    startActivity(activity);
+                } else {
+                    Toast.makeText(MainActivity.this, "Cannot open QR Code Scanning if you denied us on accessing your camera. :(", Toast.LENGTH_LONG).show();
+                }
+                return;
+            }
+        }
     }
 }

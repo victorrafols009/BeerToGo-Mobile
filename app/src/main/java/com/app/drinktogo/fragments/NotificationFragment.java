@@ -61,7 +61,7 @@ public class NotificationFragment extends ListFragment {
                     switch (which) {
                         case DialogInterface.BUTTON_POSITIVE:
                             final ProgressDialog progress = new ProgressDialog(getActivity());
-                            progress.setMessage("Logging in...");
+                            progress.setMessage("Approving this request...");
                             progress.setIndeterminate(false);
                             progress.setCancelable(false);
 
@@ -119,6 +119,9 @@ public class NotificationFragment extends ListFragment {
             JSONObject o = new JSONObject();
             try {
                 o.put("id", Integer.toString(n.id));
+                o.put("user_id", Integer.toString(n.user_id));
+                o.put("friend_id", Integer.toString(n.friend_id));
+                o.put("store_id", Integer.toString(n.store_id));
             } catch(JSONException e) {
                 e.printStackTrace();
             }
@@ -172,10 +175,11 @@ public class NotificationFragment extends ListFragment {
                                 notification.request_flag = o.getInt("user_confirm_flag");
                                 notification.user_id = o.getInt("user_id");
                                 notification.friend_id = o.getInt("friend_id");
+                                notification.store_id = o.getInt("store_id");
                                 if(o.getInt("user_confirm_flag") == 0) {
                                     notification.request_description = o.getString("friend_name") + " would like to drink your " + o.getString("item_name") + " (" + o.getString("brand") + ") at " + o.getString("store_name") + " (" + o.getString("store_address") + ").";
                                 } else {
-                                    notification.request_description = o.getString("friend_name") + " approved your request to drink " + o.getString("item_name") + " (" + o.getString("brand") + ").\nClick this to show the QR Code and present it to the store.";
+                                    notification.request_description = o.getString("friend_name") + " approved your request to drink " + o.getString("item_name") + " (" + o.getString("brand") + ").\nClick this to show the QR Code and present it to " + o.getString("store_name") + " (" + o.getString("store_address") + ").";
                                 }
                                 notification.request_date = o.getString("date_created");
                                 notificatonAdapter.addItem(notification);

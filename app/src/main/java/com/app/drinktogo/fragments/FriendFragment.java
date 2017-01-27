@@ -95,7 +95,7 @@ public class FriendFragment extends ListFragment {
                 switch (which){
                     case DialogInterface.BUTTON_POSITIVE:
                         final ProgressDialog progress = new ProgressDialog(getActivity());
-                        progress.setMessage("Logging in...");
+                        progress.setMessage("Sending your request...");
                         progress.setIndeterminate(false);
                         progress.setCancelable(false);
 
@@ -221,6 +221,8 @@ public class FriendFragment extends ListFragment {
                             inventory.date_stored = o.getString("date_stored");
                             inventory.name = o.getString("item_name");
                             inventory.brand = o.getString("item_brand");
+                            inventory.store_name = o.getString("store_name");
+                            inventory.store_address = o.getString("store_address");
                             inventoryAdapter.addItem(inventory);
                         } catch (JSONException e) {
                             e.printStackTrace();

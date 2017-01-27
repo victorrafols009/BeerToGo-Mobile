@@ -45,6 +45,7 @@ public class InventoryAdapter extends BaseAdapter {
     public static class ViewHolder {
         public TextView name;
         public TextView brand;
+        public TextView store;
         public TextView qty;
         public ImageView logo;
         public Inventory inventory;
@@ -63,6 +64,7 @@ public class InventoryAdapter extends BaseAdapter {
             convertView = mInflater.inflate(R.layout.item_row, null);
             holder.name = (TextView)convertView.findViewById(R.id.item_name);
             holder.brand = (TextView)convertView.findViewById(R.id.item_brand);
+            holder.store = (TextView)convertView.findViewById(R.id.store);
             holder.qty = (TextView)convertView.findViewById(R.id.item_qty);
             holder.logo = (ImageView) convertView.findViewById(R.id.item_logo);
             holder.inventory = null;
@@ -74,6 +76,7 @@ public class InventoryAdapter extends BaseAdapter {
         holder.inventory = i;
         holder.name.setText(i.name);
         holder.brand.setText(i.brand);
+        holder.store.setText(i.store_name + " @ " + i.store_address);
         holder.qty.setText("");
         // TODO: set logo
         // holder.logo ??

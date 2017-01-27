@@ -9,7 +9,7 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="88dp"
+        android:layout_height="wrap_content"
         android:background="?android:attr/windowBackground"
         android:backgroundTint="@color/colorPrimaryDark">
 
@@ -21,12 +21,13 @@
             android:layout_height="80dp"
             android:padding="5dp"
             android:layout_marginLeft="5dp"
-            android:layout_marginTop="5dp"/>
+            android:layout_marginTop="5dp"
+            android:layout_gravity="center" />
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:paddingTop="6dp"
             android:paddingLeft="10dp"
@@ -55,6 +56,15 @@
                 android:ellipsize="end"
                 android:minLines="2"
                 android:textColor="#97ffffff"/>
+
+            <TextView
+                android:text="Store Location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/store"
+                android:textSize="14sp"
+                android:textColor="#97ffffff"
+                android:textStyle="normal|bold" />
 
             <TextView
                 android:text="Store contact"

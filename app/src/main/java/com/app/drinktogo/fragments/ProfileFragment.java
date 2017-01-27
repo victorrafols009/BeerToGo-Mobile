@@ -1,5 +1,6 @@
 package com.app.drinktogo.fragments;
 
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.app.ProgressDialog;
 import android.os.Bundle;
@@ -62,7 +63,7 @@ public class ProfileFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         final ProgressDialog progress = new ProgressDialog(getActivity());
-        progress.setMessage("Logging in...");
+        progress.setMessage("Getting your data...");
         progress.setIndeterminate(false);
         progress.setCancelable(true);
         Ajax.get("user/" + user_id, null, new JsonHttpResponseHandler() {
