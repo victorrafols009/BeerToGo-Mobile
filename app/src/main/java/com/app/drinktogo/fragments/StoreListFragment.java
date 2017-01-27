@@ -1,8 +1,8 @@
 package com.app.drinktogo.fragments;
 
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
-import android.app.ListFragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.ListFragment;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,6 +14,7 @@ import android.widget.ListView;
 
 import com.app.drinktogo.Adapter.StoreAdapter;
 import com.app.drinktogo.Entity.Store;
+import com.app.drinktogo.MainActivity;
 import com.app.drinktogo.R;
 import com.app.drinktogo.helper.Ajax;
 import com.app.drinktogo.helper.AppConfig;
@@ -40,7 +41,7 @@ public class StoreListFragment extends ListFragment {
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         StoreAdapter.ViewHolder view = (StoreAdapter.ViewHolder) v.getTag();
-        FragmentManager fm = getActivity().getFragmentManager();
+        FragmentManager fm = getActivity().getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         ItemListFragment myFragment = (ItemListFragment)getFragmentManager().findFragmentByTag("STORE_ITEM_LIST_FRAGMENT");
         Bundle args = new Bundle();

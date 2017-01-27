@@ -1,9 +1,12 @@
 package com.app.drinktogo;
 
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -14,6 +17,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.app.drinktogo.Entity.User;
 import com.app.drinktogo.fragments.FriendListFragment;
@@ -42,6 +46,8 @@ public class MainActivity extends AppCompatActivity
     public static final String FRIEND_FRAGMENT = "FRIEND_FRAGMENT";
     public static final String NOTIFICATION_FRAGMENT = "NOTIFICATION_FRAGMENT";
 
+    boolean doubleBackToExitPressedOnce = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,7 +74,7 @@ public class MainActivity extends AppCompatActivity
             public void onClick(View v) {
                 displayFragment(PROFILE_FRAGMENT);
                 getSupportActionBar().setTitle("Your Profile");
-                    drawer.closeDrawer(GravityCompat.START);
+                drawer.closeDrawer(GravityCompat.START);
             }
         });
 
@@ -79,6 +85,12 @@ public class MainActivity extends AppCompatActivity
             user_json = data;
             full_name.setText(data.getString("full_name"));
             email.setText(data.getString("email"));
+
+            if (data.getInt("store_id") == 0) {
+                Menu navMenu = navigationView.getMenu();
+                navMenu.findItem(R.id.qrcode).setVisible(false);
+            }
+
             getSupportActionBar().setTitle("Your Profile");
         } catch (JSONException e) {
             e.printStackTrace();
@@ -93,8 +105,23 @@ public class MainActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            if (getFragmentManager().getBackStackEntryCount() > 0) {
-                getFragmentManager().popBackStack();
+            int fragmentCount = getSupportFragmentManager().getBackStackEntryCount();
+            if(fragmentCount == 1) {
+                if (doubleBackToExitPressedOnce) {
+                    finish();
+                }
+
+                this.doubleBackToExitPressedOnce = true;
+                Toast.makeText(this, "Please tap BACK again to exit.", Toast.LENGTH_LONG).show();
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        doubleBackToExitPressedOnce = false;
+                    }
+                }, 3500);
+            } else if(fragmentCount > 1) {
+                getSupportFragmentManager().popBackStack();
             } else {
                 super.onBackPressed();
             }
@@ -134,14 +161,14 @@ public class MainActivity extends AppCompatActivity
 
     public void displayFragment(String FRAGMENT_TAG){
 
-        FragmentManager fm = getFragmentManager();
+        FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         Bundle args = new Bundle();
 
         switch (FRAGMENT_TAG){
 
             case NOTIFICATION_FRAGMENT:
-                NotificationFragment notificationFragment = (NotificationFragment) getFragmentManager().findFragmentByTag(FRAGMENT_TAG);
+                NotificationFragment notificationFragment = (NotificationFragment) getSupportFragmentManager().findFragmentByTag(FRAGMENT_TAG);
                 try {
                     args.putInt("user_id", user_json.getInt("id"));
                 } catch (JSONException e) {
@@ -157,7 +184,7 @@ public class MainActivity extends AppCompatActivity
                 break;
 
             case PROFILE_FRAGMENT:
-                ProfileFragment profileFragment = (ProfileFragment) getFragmentManager().findFragmentByTag(FRAGMENT_TAG);
+                ProfileFragment profileFragment = (ProfileFragment) getSupportFragmentManager().findFragmentByTag(FRAGMENT_TAG);
                 try {
                     args.putInt("user_id", user_json.getInt("id"));
                 } catch (JSONException e) {
@@ -173,7 +200,7 @@ public class MainActivity extends AppCompatActivity
                 break;
 
             case STORE_LIST_FRAGMENT:
-                StoreListFragment storeFragment = (StoreListFragment) getFragmentManager().findFragmentByTag(FRAGMENT_TAG);
+                StoreListFragment storeFragment = (StoreListFragment) getSupportFragmentManager().findFragmentByTag(FRAGMENT_TAG);
                 if (storeFragment != null && storeFragment.isVisible()) {
                     ft.replace(R.id.fragment_container, storeFragment, FRAGMENT_TAG);
                 }else{
@@ -182,7 +209,7 @@ public class MainActivity extends AppCompatActivity
                 break;
 
             case FRIEND_LIST_FRAGMENT:
-                FriendListFragment friendFragment = (FriendListFragment) getFragmentManager().findFragmentByTag(FRAGMENT_TAG);
+                FriendListFragment friendFragment = (FriendListFragment) getSupportFragmentManager().findFragmentByTag(FRAGMENT_TAG);
                 try {
                     args.putInt("user_id", user_json.getInt("id"));
                 } catch (JSONException e) {

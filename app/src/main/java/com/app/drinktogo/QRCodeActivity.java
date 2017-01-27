@@ -3,6 +3,7 @@ package com.app.drinktogo;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 
 import com.google.zxing.Result;
@@ -17,6 +18,10 @@ public class QRCodeActivity extends AppCompatActivity implements ZXingScannerVie
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.qr_code);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Scan QR");
 
         mScannerView = new ZXingScannerView(this);
         setContentView(mScannerView);

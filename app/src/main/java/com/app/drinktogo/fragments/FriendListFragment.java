@@ -1,8 +1,8 @@
 package com.app.drinktogo.fragments;
 
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
-import android.app.ListFragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.ListFragment;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,6 +12,7 @@ import android.widget.ListView;
 
 import com.app.drinktogo.Adapter.FriendAdapter;
 import com.app.drinktogo.Entity.Friend;
+import com.app.drinktogo.MainActivity;
 import com.app.drinktogo.R;
 import com.app.drinktogo.helper.Ajax;
 import com.app.drinktogo.helper.AppConfig;
@@ -43,7 +44,7 @@ public class FriendListFragment extends ListFragment {
         FriendAdapter.ViewHolder view = (FriendAdapter.ViewHolder) v.getTag();
         Friend f = view.friend;
 
-        FragmentManager fm = getActivity().getFragmentManager();
+        FragmentManager fm = getActivity().getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         FriendFragment myFragment = (FriendFragment)getFragmentManager().findFragmentByTag("FRIEND_FRAGMENT");
         Bundle args = new Bundle();
