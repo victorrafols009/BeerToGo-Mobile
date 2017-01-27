@@ -65,19 +65,116 @@
                 android:layout_alignStart="@+id/name_of_store" />
 
             <LinearLayout
-                android:orientation="vertical"
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="308dp"
-                android:layout_alignParentBottom="true"
+                android:layout_height="50dp"
+                android:layout_below="@+id/user_banner"
                 android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true">
+                android:layout_alignParentStart="true"
+                android:id="@+id/linearLayout"
+                android:background="#272223">
 
-                <ListView
-                    android:id="@+id/list_alcohol"
-                    android:layout_height="wrap_content"
-                    android:layout_width="match_parent">
-                </ListView>
+                <TextView
+                    android:layout_width="120dp"
+                    android:layout_height="20dp"
+                    android:layout_marginTop="15dp"
+                    android:text="Drink(s)"
+                    android:layout_marginLeft="15dp"
+                    android:textColor="#79ffffff"/>
+
+                <TextView
+                    android:layout_width="120dp"
+                    android:layout_height="20dp"
+                    android:layout_marginTop="15dp"
+                    android:text="Price"
+                    android:gravity="center"
+                    android:textColor="#79ffffff"/>
+
+                <TextView
+                    android:layout_width="120dp"
+                    android:layout_height="20dp"
+                    android:layout_marginTop="15dp"
+                    android:text="Add to cart"
+                    android:id="@+id/subtotal"
+                    android:gravity="center"
+                    android:textColor="#79ffffff"/>
+
             </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/linearLayout">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/drinks"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginLeft="5dp"
+                    android:src="@drawable/ic_wine"
+                    app:civ_border_width="2dp"
+                    app:civ_fill_color="@color/colorAccent"
+                    app:civ_border_color="@color/colorPrimaryDark"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingLeft="10dp"
+                    android:layout_marginTop="5dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:layout_marginTop="15dp"
+                        android:text="Quarter Cast"
+                        android:id="@+id/drink_type"
+                        android:textColor="@color/colorAccent"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:id="@+id/drink_name"
+                        android:text="Laphoraig"
+                        android:textColor="#79ffffff"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="120dp"
+                        android:layout_height="47dp"
+                        android:text="P4599.25"
+                        android:paddingTop="15dp"
+                        android:id="@+id/checkout_subtotal"
+                        android:gravity="center"
+                        android:textColor="#79ffffff"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:paddingTop="20dp"
+                        android:src="@drawable/ic_cart"
+                        android:layout_gravity="center"
+                        android:id="@+id/imageView9" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
 
 
         </RelativeLayout>
