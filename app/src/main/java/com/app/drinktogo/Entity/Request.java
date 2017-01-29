@@ -10,6 +10,7 @@ public class Request {
     public int user_id;
     public int friend_id;
     public int store_id;
+    public int inventory_id;
     public String request_description;
     public String request_date;
 }

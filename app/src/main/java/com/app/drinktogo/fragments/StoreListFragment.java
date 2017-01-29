@@ -32,9 +32,11 @@ import cz.msebera.android.httpclient.Header;
 
 public class StoreListFragment extends ListFragment {
     StoreAdapter storeAdapter;
+    private int user_id;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View  view = inflater.inflate(R.layout.fragment_list, container, false);
+        user_id = getArguments().getInt("user_id");
         return view;
     }
 
@@ -46,6 +48,7 @@ public class StoreListFragment extends ListFragment {
         ItemListFragment myFragment = (ItemListFragment)getFragmentManager().findFragmentByTag("STORE_ITEM_LIST_FRAGMENT");
         Bundle args = new Bundle();
         args.putInt("store_id", view.store.id);
+        args.putInt("user_id", user_id);
         if (myFragment != null && myFragment.isVisible()) {
             myFragment.setArguments(args);
             ft.replace(R.id.fragment_container, myFragment, "STORE_ITEM_LIST_FRAGMENT");

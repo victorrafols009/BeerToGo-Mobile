@@ -230,6 +230,15 @@ public class MainActivity extends AppCompatActivity
                 break;
 
             case PROFILE_FRAGMENT:
+//                this comment part is the solution for reloading of fragment... upon backpress is not supported
+//                try {
+//                    args.putInt("user_id", user_json.getInt("id"));
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//                ProfileFragment profileFragment = new ProfileFragment();
+//                profileFragment.setArguments(args);
+//                ft.replace(R.id.fragment_container, profileFragment, FRAGMENT_TAG);
                 ProfileFragment profileFragment = (ProfileFragment) getSupportFragmentManager().findFragmentByTag(FRAGMENT_TAG);
                 try {
                     args.putInt("user_id", user_json.getInt("id"));
@@ -247,10 +256,17 @@ public class MainActivity extends AppCompatActivity
 
             case STORE_LIST_FRAGMENT:
                 StoreListFragment storeFragment = (StoreListFragment) getSupportFragmentManager().findFragmentByTag(FRAGMENT_TAG);
+                try {
+                    args.putInt("user_id", user_json.getInt("id"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
                 if (storeFragment != null && storeFragment.isVisible()) {
                     ft.replace(R.id.fragment_container, storeFragment, FRAGMENT_TAG);
                 }else{
-                    ft.add(R.id.fragment_container, new StoreListFragment(), FRAGMENT_TAG).addToBackStack(FRAGMENT_TAG);
+                    StoreListFragment frag = new StoreListFragment();
+                    frag.setArguments(args);
+                    ft.add(R.id.fragment_container, frag, FRAGMENT_TAG).addToBackStack(FRAGMENT_TAG);
                 }
                 break;
 

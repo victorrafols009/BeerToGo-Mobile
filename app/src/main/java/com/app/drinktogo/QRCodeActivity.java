@@ -79,6 +79,7 @@ public class QRCodeActivity extends AppCompatActivity implements ZXingScannerVie
 
                         RequestParams data = new RequestParams();
                         data.add("id", res.getString("id"));
+                        data.add("inventory_id", res.getString("inventory_id"));
 
                         Ajax.post("transaction/confirm/store", data, new JsonHttpResponseHandler() {
                             @Override

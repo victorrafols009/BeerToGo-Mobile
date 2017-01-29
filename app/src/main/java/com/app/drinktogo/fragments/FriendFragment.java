@@ -102,7 +102,7 @@ public class FriendFragment extends ListFragment {
                         RequestParams data = new RequestParams();
                         data.add("user_id", Integer.toString(user_id));
                         data.add("friend_id", Integer.toString(curr_user_id));
-                        data.add("inventory_id", Integer.toString(i.item_id));
+                        data.add("inventory_id", Integer.toString(i.id));
                         data.add("store_id", Integer.toString(i.store_id));
 
                         Ajax.post("transaction/new", data, new JsonHttpResponseHandler(){

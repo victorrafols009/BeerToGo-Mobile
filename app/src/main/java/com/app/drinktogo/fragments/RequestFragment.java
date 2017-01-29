@@ -59,6 +59,7 @@ public class RequestFragment extends ListFragment {
                 o.put("user_id", Integer.toString(r.user_id));
                 o.put("friend_id", Integer.toString(r.friend_id));
                 o.put("store_id", Integer.toString(r.store_id));
+                o.put("inventory_id", Integer.toString(r.inventory_id));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -172,6 +173,7 @@ public class RequestFragment extends ListFragment {
                                 request.user_id = o.getInt("user_id");
                                 request.friend_id = o.getInt("friend_id");
                                 request.store_id = o.getInt("store_id");
+                                request.inventory_id = o.getInt("inventory_id");
                                 if(o.getInt("user_confirm_flag") == 1) {
                                     request.request_description = o.getString("user_name") + " approved your request to drink " + o.getString("item_name") + " (" + o.getString("brand") + ").\nClick this to show the QR Code and present it to " + o.getString("store_name") + " (" + o.getString("store_address") + ").";
                                 } else if(o.getInt("user_confirm_flag") == -1) {

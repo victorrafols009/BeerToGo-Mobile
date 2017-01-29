@@ -47,7 +47,7 @@
                     android:hint="username"
                     android:paddingLeft="15dp"
                     android:layout_marginTop="25dp"
-                    android:id="@+id/username"
+                    android:id="@+id/payment_username"
                     android:layout_gravity="center"
                     android:background="@drawable/text_border"
                     android:textColorHint="#707070"/>
@@ -59,14 +59,14 @@
                     android:hint="password"
                     android:paddingLeft="15dp"
                     android:layout_marginTop="30dp"
-                    android:id="@+id/pass"
+                    android:id="@+id/payment_password"
                     android:layout_gravity="center"
                     android:background="@drawable/text_border"
                     android:textColorHint="#707070"/>
             </LinearLayout>
 
             <Button
-                android:id="@+id/login"
+                android:id="@+id/payment_login"
                 style="?android:textAppearanceSmall"
                 android:layout_width="250dp"
                 android:layout_height="wrap_content"
