@@ -8,7 +8,9 @@
         <item android:title="Scan QR Code"
             android:id="@+id/qrcode" />
         <item android:title="Notifications"
-            android:id="@+id/request" />
+            android:id="@+id/notifications" />
+        <item android:title="Requests"
+            android:id="@+id/requests" />
         <item android:title="Friends"
             android:id="@+id/friends" />
         <item android:title="Message"

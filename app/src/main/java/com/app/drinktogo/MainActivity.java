@@ -25,9 +25,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.app.drinktogo.Entity.Request;
 import com.app.drinktogo.Entity.User;
 import com.app.drinktogo.fragments.FriendListFragment;
 import com.app.drinktogo.fragments.NotificationFragment;
+import com.app.drinktogo.fragments.RequestFragment;
 import com.app.drinktogo.fragments.StoreListFragment;
 import com.app.drinktogo.fragments.ProfileFragment;
 import com.app.drinktogo.helper.AppConfig;
@@ -51,6 +53,7 @@ public class MainActivity extends AppCompatActivity
     public static final String FRIEND_LIST_FRAGMENT = "FRIEND_LIST_FRAGMENT";
     public static final String FRIEND_FRAGMENT = "FRIEND_FRAGMENT";
     public static final String NOTIFICATION_FRAGMENT = "NOTIFICATION_FRAGMENT";
+    public static final String REQUEST_FRAGMENT = "REQUEST_FRAGMENT";
 
     boolean doubleBackToExitPressedOnce = false;
 
@@ -165,17 +168,20 @@ public class MainActivity extends AppCompatActivity
                     .setPositiveButton("Yes", dialogClickListener)
                     .setNegativeButton("No", dialogClickListener)
                     .show();
-        }else if(id == R.id.qrcode) {
+        } else if(id == R.id.qrcode) {
             verifyCameraPermission(MainActivity.this);
-        }else if(id == R.id.friends){
+        } else if(id == R.id.friends){
             displayFragment(FRIEND_LIST_FRAGMENT);
             getSupportActionBar().setTitle("Friend List");
-        }else if(id == R.id.stores){
+        } else if(id == R.id.stores){
             displayFragment(STORE_LIST_FRAGMENT);
             getSupportActionBar().setTitle("Store List");
-        } else if(id == R.id.request) {
+        } else if(id == R.id.notifications) {
             displayFragment(NOTIFICATION_FRAGMENT);
             getSupportActionBar().setTitle("Notifications");
+        } else if(id == R.id.requests) {
+            displayFragment(REQUEST_FRAGMENT);
+            getSupportActionBar().setTitle("Requests");
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -190,6 +196,22 @@ public class MainActivity extends AppCompatActivity
         Bundle args = new Bundle();
 
         switch (FRAGMENT_TAG){
+
+            case REQUEST_FRAGMENT:
+                RequestFragment requestFragment = (RequestFragment) getSupportFragmentManager().findFragmentByTag(FRAGMENT_TAG);
+                try {
+                    args.putInt("user_id", user_json.getInt("id"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                if (requestFragment != null && requestFragment.isVisible()) {
+                    ft.replace(R.id.fragment_container, requestFragment, FRAGMENT_TAG);
+                }else{
+                    RequestFragment frag = new RequestFragment();
+                    frag.setArguments(args);
+                    ft.add(R.id.fragment_container, frag, FRAGMENT_TAG).addToBackStack(FRAGMENT_TAG);
+                }
+                break;
 
             case NOTIFICATION_FRAGMENT:
                 NotificationFragment notificationFragment = (NotificationFragment) getSupportFragmentManager().findFragmentByTag(FRAGMENT_TAG);

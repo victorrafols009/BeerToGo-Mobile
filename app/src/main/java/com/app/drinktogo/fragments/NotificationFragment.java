@@ -54,102 +54,105 @@ public class NotificationFragment extends ListFragment {
         NotificationAdapter.ViewHolder view = (NotificationAdapter.ViewHolder) v.getTag();
         final Notification n = view.notification;
 
-        if(n.request_flag == 0) {
-            DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    switch (which) {
-                        case DialogInterface.BUTTON_POSITIVE:
-                            final ProgressDialog progress = new ProgressDialog(getActivity());
-                            progress.setMessage("Approving this request...");
-                            progress.setIndeterminate(false);
-                            progress.setCancelable(false);
+        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                final ProgressDialog progress = new ProgressDialog(getActivity());
+                progress.setMessage("Approving this request...");
+                progress.setIndeterminate(false);
+                progress.setCancelable(false);
 
-                            RequestParams data = new RequestParams();
-                            data.add("id", Integer.toString(n.id));
+                switch (which) {
+                    case DialogInterface.BUTTON_POSITIVE:
+                        RequestParams data = new RequestParams();
+                        data.add("id", Integer.toString(n.id));
 
-                            Ajax.post("transaction/confirm/user", data, new JsonHttpResponseHandler() {
-                                @Override
-                                public void onStart() {
-                                    progress.show();
-                                }
+                        Ajax.post("transaction/confirm/user", data, new JsonHttpResponseHandler() {
+                            @Override
+                            public void onStart() {
+                                progress.show();
+                            }
 
-                                @Override
-                                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                                    if (statusCode == 200) {
-                                        if (response.length() > 0) {
-                                            AppConfig.showDialog(getActivity(), "Message", "Successfully allowed to drink!");
-                                        } else {
-                                            AppConfig.showDialog(getActivity(), "Message", "Approval not send. Sorry. :(");
-                                        }
+                            @Override
+                            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                                if (statusCode == 200) {
+                                    if (response.length() > 0) {
+                                        AppConfig.showDialog(getActivity(), "Message", "Successfully allowed to drink!");
                                     } else {
-                                        AppConfig.showDialog(getActivity(), "Message", "There is problem in your request. Please try again.");
+                                        AppConfig.showDialog(getActivity(), "Message", "Approval not send. Sorry. :(");
                                     }
-                                    Log.d("Result", response.toString());
-                                }
-
-                                @Override
-                                public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                                    Log.d("Failed: ", "" + statusCode);
-                                    Log.d("Error : ", "" + throwable);
+                                } else {
                                     AppConfig.showDialog(getActivity(), "Message", "There is problem in your request. Please try again.");
                                 }
+                                Log.d("Result", response.toString());
+                            }
 
-                                @Override
-                                public void onFinish() {
-                                    progress.dismiss();
+                            @Override
+                            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                                Log.d("Failed: ", "" + statusCode);
+                                Log.d("Error : ", "" + throwable);
+                                AppConfig.showDialog(getActivity(), "Message", "There is problem in your request. Please try again.");
+                            }
+
+                            @Override
+                            public void onFinish() {
+                                progress.dismiss();
+                            }
+                        });
+                        break;
+
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        RequestParams data2 = new RequestParams();
+                        data2.add("id", Integer.toString(n.id));
+
+                        Ajax.post("transaction/decline/user", data2, new JsonHttpResponseHandler() {
+                            @Override
+                            public void onStart() {
+                                progress.show();
+                            }
+
+                            @Override
+                            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                                if (statusCode == 200) {
+                                    if (response.length() > 0) {
+                                        AppConfig.showDialog(getActivity(), "Message", "Successfully declined the drink!");
+                                    } else {
+                                        AppConfig.showDialog(getActivity(), "Message", "Declining not send. Sorry. :(");
+                                    }
+                                } else {
+                                    AppConfig.showDialog(getActivity(), "Message", "There is problem in your request. Please try again.");
                                 }
-                            });
-                            break;
+                                Log.d("Result", response.toString());
+                            }
 
-                        case DialogInterface.BUTTON_NEGATIVE:
-                            dialog.dismiss();
-                            break;
-                    }
+                            @Override
+                            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                                Log.d("Failed: ", "" + statusCode);
+                                Log.d("Error : ", "" + throwable);
+                                AppConfig.showDialog(getActivity(), "Message", "There is problem in your request. Please try again.");
+                            }
+
+                            @Override
+                            public void onFinish() {
+                                progress.dismiss();
+                            }
+                        });
+                        break;
+
+                    case DialogInterface.BUTTON_NEUTRAL:
+                        dialog.dismiss();
+                        break;
                 }
-            };
-
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setTitle("Approval Confirmation")
-                    .setMessage("Allow this?")
-                    .setPositiveButton("Yes", dialogClickListener)
-                    .setNegativeButton("No", dialogClickListener)
-                    .show();
-        } else {
-            JSONObject o = new JSONObject();
-            try {
-                o.put("id", Integer.toString(n.id));
-                o.put("user_id", Integer.toString(n.user_id));
-                o.put("friend_id", Integer.toString(n.friend_id));
-                o.put("store_id", Integer.toString(n.store_id));
-            } catch(JSONException e) {
-                e.printStackTrace();
             }
+        };
 
-            RequestParams data = new RequestParams();
-            data.add("json_value", o.toString());
-
-            Ajax.post("encrypt", data, new JsonHttpResponseHandler() {
-                @Override
-                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                        try {
-                            Intent i = new Intent(getActivity(), QRCodeGenerator.class);
-                            i.putExtra("qr_code", response.getString("encrypted_json"));
-                            startActivity(i);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                }
-
-                @Override
-                public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                    Log.d("Failed: ", ""+statusCode);
-                    Log.d("Error : ", "" + throwable);
-                    AppConfig.showDialog(getActivity(), "Message", "There is problem in your request. Please try again.");
-                }
-
-            });
-        }
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Approval Confirmation")
+                .setMessage("Allow this?")
+                .setPositiveButton("Approve", dialogClickListener)
+                .setNegativeButton("Decline", dialogClickListener)
+                .setNeutralButton("Cancel", dialogClickListener)
+                .show();
     }
 
     @Override
@@ -170,17 +173,13 @@ public class NotificationFragment extends ListFragment {
                         Notification notification = new Notification();
                         try {
                             JSONObject o = response.getJSONObject(i);
-                            if(o.getInt("store_confirm_flag") == 0) {
+                            if(o.getInt("user_confirm_flag") == 0 && o.getInt("store_confirm_flag") == 0) {
                                 notification.id = o.getInt("id");
                                 notification.request_flag = o.getInt("user_confirm_flag");
                                 notification.user_id = o.getInt("user_id");
                                 notification.friend_id = o.getInt("friend_id");
                                 notification.store_id = o.getInt("store_id");
-                                if(o.getInt("user_confirm_flag") == 0) {
-                                    notification.request_description = o.getString("friend_name") + " would like to drink your " + o.getString("item_name") + " (" + o.getString("brand") + ") at " + o.getString("store_name") + " (" + o.getString("store_address") + ").";
-                                } else {
-                                    notification.request_description = o.getString("friend_name") + " approved your request to drink " + o.getString("item_name") + " (" + o.getString("brand") + ").\nClick this to show the QR Code and present it to " + o.getString("store_name") + " (" + o.getString("store_address") + ").";
-                                }
+                                notification.request_description = o.getString("friend_name") + " would like to drink your " + o.getString("item_name") + " (" + o.getString("brand") + ") at " + o.getString("store_name") + " (" + o.getString("store_address") + ").";
                                 notification.request_date = o.getString("date_created");
                                 notificatonAdapter.addItem(notification);
                             }
