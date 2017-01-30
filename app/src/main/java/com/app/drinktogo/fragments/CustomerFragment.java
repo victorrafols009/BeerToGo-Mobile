@@ -1,11 +1,10 @@
 package com.app.drinktogo.fragments;
 
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
-import android.support.v7.app.ActionBar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,11 +15,13 @@ import android.widget.TextView;
 
 import com.app.drinktogo.Adapter.InventoryAdapter;
 import com.app.drinktogo.Entity.Inventory;
-import com.app.drinktogo.MainActivity;
+import com.app.drinktogo.Entity.User;
 import com.app.drinktogo.R;
 import com.app.drinktogo.helper.Ajax;
 import com.app.drinktogo.helper.AppConfig;
+import com.app.drinktogo.helper.DatabaseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -29,13 +30,11 @@ import org.json.JSONObject;
 import cz.msebera.android.httpclient.Header;
 
 /**
- * Created by Ken on 17/01/2017.
+ * Created by Victor Rafols on 1/31/2017.
  */
 
-public class ProfileFragment extends ListFragment {
-
+public class CustomerFragment extends ListFragment {
     private int user_id;
-//    private String back_fragment;
 
     private View headerView;
     private ImageView user_logo;
@@ -46,18 +45,31 @@ public class ProfileFragment extends ListFragment {
     private TextView trans_count;
     private TextView date_created;
 
+    private DatabaseHandler db;
+    private int curr_user_id;
+    private int store_id;
+
     InventoryAdapter inventoryAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View  view = inflater.inflate(R.layout.fragment_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_list, container, false);
 
-        headerView = inflater.inflate(R.layout.user_profile, null, false);
+        headerView = inflater.inflate(R.layout.friend_profile, null, false);
+
+        db = new DatabaseHandler(getActivity());
+        User user = db.getUser();
+        JSONObject data = user.record();
+        try {
+            curr_user_id = data.getInt("id");
+            store_id = data.getInt("store_id");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         user_id = getArguments().getInt("user_id");
-//        back_fragment = getArguments().getString("back_fragment");
 
         user_logo = (ImageView) headerView.findViewById(R.id.user_logo);
         full_name = (TextView) headerView.findViewById(R.id.user_full_name);
@@ -70,17 +82,78 @@ public class ProfileFragment extends ListFragment {
         return view;
     }
 
-
-
     public void onListItemClick(ListView l, View v, int position, long id) {
+        InventoryAdapter.ViewHolder view = (InventoryAdapter.ViewHolder) v.getTag();
+        final Inventory i = view.inventory;
 
+        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which){
+                    case DialogInterface.BUTTON_POSITIVE:
+                        final ProgressDialog progress = new ProgressDialog(getActivity());
+                        progress.setMessage("Sending your request...");
+                        progress.setIndeterminate(false);
+                        progress.setCancelable(false);
+
+                        RequestParams data = new RequestParams();
+                        data.add("inventory_id", Integer.toString(i.id));
+
+                        Ajax.post("inventory/empty", data, new JsonHttpResponseHandler(){
+                            @Override
+                            public void onStart() {
+                                progress.show();
+                            }
+
+                            @Override
+                            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                                if (statusCode == 200) {
+                                    if(response.length() > 0){
+                                        AppConfig.showDialog(getActivity(), "Message", "Successfully emptied the drink!");
+                                    }else{
+                                        AppConfig.showDialog(getActivity(), "Message", "Request not send. Sorry. :(");
+                                    }
+                                } else {
+                                    AppConfig.showDialog(getActivity(), "Message", "There is problem in your request. Please try again.");
+                                }
+                                Log.d("Result", response.toString());
+                            }
+
+                            @Override
+                            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                                Log.d("Failed: ", ""+statusCode);
+                                Log.d("Error : ", "" + throwable);
+                                AppConfig.showDialog(getActivity(), "Message", "There is problem in your request. Please try again.");
+                            }
+
+                            @Override
+                            public void onFinish() {
+                                progress.dismiss();
+                            }
+                        });
+                        break;
+
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        dialog.dismiss();
+                        break;
+                }
+            }
+        };
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Empty Confirmation")
+                .setMessage("Empty this drink: " + i.name + "?")
+                .setPositiveButton("Yes", dialogClickListener)
+                .setNegativeButton("No", dialogClickListener)
+                .show();
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
         final ProgressDialog progress = new ProgressDialog(getActivity());
-        progress.setMessage("Getting your data...");
+        progress.setMessage("Logging in...");
         progress.setIndeterminate(false);
         progress.setCancelable(true);
         Ajax.get("user/" + user_id, null, new JsonHttpResponseHandler() {
@@ -103,7 +176,7 @@ public class ProfileFragment extends ListFragment {
                             full_name.setText(o.getString("full_name"));
                             date_created.setText("Since : " + o.getString("date_created_format"));
                             inventory_count.setText(o.getString("inventory_count"));
-                            trans_count.setText("0"); //set value if messages is okay already
+                            trans_count.setText(o.getString("transaction_count"));
                             friend_count.setText(o.getString("friend_count"));
                             email.setText(o.getString("email"));
                         } catch (JSONException e) {
@@ -125,7 +198,7 @@ public class ProfileFragment extends ListFragment {
 
         inventoryAdapter = new InventoryAdapter(getActivity());
 
-        Ajax.get("user/" + user_id + "/inventory", null, new JsonHttpResponseHandler() {
+        Ajax.get("store/" + store_id + "/customer/" + user_id + "/inventory", null, new JsonHttpResponseHandler() {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {

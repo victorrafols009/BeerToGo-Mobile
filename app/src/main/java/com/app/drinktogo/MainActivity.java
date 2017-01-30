@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
@@ -27,6 +28,7 @@ import android.widget.Toast;
 
 import com.app.drinktogo.Entity.Request;
 import com.app.drinktogo.Entity.User;
+import com.app.drinktogo.fragments.CustomerListFragment;
 import com.app.drinktogo.fragments.FriendListFragment;
 import com.app.drinktogo.fragments.NotificationFragment;
 import com.app.drinktogo.fragments.RequestFragment;
@@ -54,6 +56,7 @@ public class MainActivity extends AppCompatActivity
     public static final String FRIEND_FRAGMENT = "FRIEND_FRAGMENT";
     public static final String NOTIFICATION_FRAGMENT = "NOTIFICATION_FRAGMENT";
     public static final String REQUEST_FRAGMENT = "REQUEST_FRAGMENT";
+    public static final String CUSTOMER_LIST_FRAGMENT = "CUSTOMER_LIST_FRAGMENT";
 
     boolean doubleBackToExitPressedOnce = false;
 
@@ -98,6 +101,7 @@ public class MainActivity extends AppCompatActivity
             if (data.getInt("store_id") == 0) {
                 Menu navMenu = navigationView.getMenu();
                 navMenu.findItem(R.id.qrcode).setVisible(false);
+                navMenu.findItem(R.id.customers).setVisible(false);
             }
 
             getSupportActionBar().setTitle("Your Profile");
@@ -131,6 +135,8 @@ public class MainActivity extends AppCompatActivity
                 }, 3500);
             } else if(fragmentCount > 1) {
                 getSupportFragmentManager().popBackStack();
+//                Fragment fragment = getSupportFragmentManager().getFragments().get(fragmentCount);
+//                fragment.onResume();
             } else {
                 super.onBackPressed();
             }
@@ -182,6 +188,9 @@ public class MainActivity extends AppCompatActivity
         } else if(id == R.id.requests) {
             displayFragment(REQUEST_FRAGMENT);
             getSupportActionBar().setTitle("Requests");
+        } else if(id == R.id.customers) {
+            displayFragment(CUSTOMER_LIST_FRAGMENT);
+            getSupportActionBar().setTitle("Customers");
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -197,6 +206,21 @@ public class MainActivity extends AppCompatActivity
 
         switch (FRAGMENT_TAG){
 
+            case CUSTOMER_LIST_FRAGMENT:
+                CustomerListFragment customerListFragment = (CustomerListFragment) getSupportFragmentManager().findFragmentByTag(FRAGMENT_TAG);
+                try {
+                    args.putInt("user_id", user_json.getInt("id"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                if (customerListFragment != null && customerListFragment.isVisible()) {
+                    ft.replace(R.id.fragment_container, customerListFragment, FRAGMENT_TAG);
+                }else{
+                    CustomerListFragment frag = new CustomerListFragment();
+                    frag.setArguments(args);
+                    ft.add(R.id.fragment_container, frag, FRAGMENT_TAG).addToBackStack(FRAGMENT_TAG);
+                }
+                break;
             case REQUEST_FRAGMENT:
                 RequestFragment requestFragment = (RequestFragment) getSupportFragmentManager().findFragmentByTag(FRAGMENT_TAG);
                 try {

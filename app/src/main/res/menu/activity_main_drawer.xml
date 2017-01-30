@@ -7,6 +7,8 @@
             android:id="@+id/stores" />
         <item android:title="Scan QR Code"
             android:id="@+id/qrcode" />
+        <item android:title="Customers"
+            android:id="@+id/customers" />
         <item android:title="Notifications"
             android:id="@+id/notifications" />
         <item android:title="Requests"
