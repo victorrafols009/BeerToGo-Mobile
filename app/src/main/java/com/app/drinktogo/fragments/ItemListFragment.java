@@ -51,32 +51,32 @@ public class ItemListFragment extends ListFragment {
         ItemAdapter.ViewHolder view = (ItemAdapter.ViewHolder) v.getTag();
         final Item i = view.item;
 
-//        Log.d("Item", i.id + " - " + i.name);
-//        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialog, int which) {
-//                switch (which) {
-//                    case DialogInterface.BUTTON_POSITIVE:
-//                        Intent intent = new Intent(getActivity(), PurchaseActivity.class);
-//                        intent.putExtra("user_id", Integer.toString(user_id));
-//                        intent.putExtra("item_id", Integer.toString(i.id));
-//                        intent.putExtra("store_id", Integer.toString(store_id));
-//                        startActivity(intent);
-//                        break;
-//
-//                    case DialogInterface.BUTTON_NEGATIVE:
-//                        dialog.dismiss();
-//                        break;
-//                }
-//            }
-//        };
-//
-//        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-//        builder.setTitle("Puchase Confirmation")
-//                .setMessage("Buy this drink: " + i.name + "?")
-//                .setPositiveButton("Yes", dialogClickListener)
-//                .setNegativeButton("No", dialogClickListener)
-//                .show();
+        Log.d("Item", i.id + " - " + i.name);
+        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which) {
+                    case DialogInterface.BUTTON_POSITIVE:
+                        Intent intent = new Intent(getActivity(), PurchaseActivity.class);
+                        intent.putExtra("user_id", Integer.toString(user_id));
+                        intent.putExtra("item_id", Integer.toString(i.id));
+                        intent.putExtra("store_id", Integer.toString(store_id));
+                        startActivity(intent);
+                        break;
+
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        dialog.dismiss();
+                        break;
+                }
+            }
+        };
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Puchase Confirmation")
+                .setMessage("Buy this drink: " + i.name + "?")
+                .setPositiveButton("Yes", dialogClickListener)
+                .setNegativeButton("No", dialogClickListener)
+                .show();
     }
 
     @Override
