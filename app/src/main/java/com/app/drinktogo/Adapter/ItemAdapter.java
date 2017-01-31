@@ -6,11 +6,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.app.drinktogo.Entity.Item;
 import com.app.drinktogo.R;
+import com.app.drinktogo.helper.AppConfig;
 
 import java.util.ArrayList;
 
@@ -46,7 +49,9 @@ public class ItemAdapter extends BaseAdapter {
         public TextView name;
         public TextView brand;
         public TextView qty;
+        public TextView store;
         public ImageView logo;
+        public ImageView item_cart;
         public Item item;
     }
 
@@ -65,6 +70,8 @@ public class ItemAdapter extends BaseAdapter {
             holder.brand = (TextView)convertView.findViewById(R.id.item_brand);
             holder.qty = (TextView)convertView.findViewById(R.id.item_qty);
             holder.logo = (ImageView) convertView.findViewById(R.id.item_logo);
+            holder.store = (TextView)convertView.findViewById(R.id.store);
+            holder.item_cart = (ImageView) convertView.findViewById(R.id.item_cart);
             holder.item = null;
             convertView.setTag(holder);
         } else {
@@ -74,7 +81,8 @@ public class ItemAdapter extends BaseAdapter {
         holder.item = i;
         holder.name.setText(i.name);
         holder.brand.setText(i.brand);
-        holder.qty.setText("Quantity: " + i.qty);
+        holder.qty.setText("Amount: " + i.qty);
+        holder.store.setVisibility(View.GONE);
         // TODO: set logo
         // holder.logo ??
         return convertView;

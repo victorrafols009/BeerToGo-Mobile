@@ -16,6 +16,8 @@ import com.loopj.android.http.RequestParams;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
 import cz.msebera.android.httpclient.Header;
 
 /**
@@ -30,7 +32,7 @@ public class PurchaseActivity extends AppCompatActivity {
 
         Intent i = getIntent();
         final String user_id = i.getStringExtra("user_id");
-        final String item_id = i.getStringExtra("item_id");
+        final ArrayList<Integer> items_id = (ArrayList<Integer>) getIntent().getSerializableExtra("items_id");
         final String store_id = i.getStringExtra("store_id");
 
         final EditText username = (EditText) findViewById(R.id.payment_username);
@@ -47,44 +49,51 @@ public class PurchaseActivity extends AppCompatActivity {
                     progress.setIndeterminate(false);
                     progress.setCancelable(false);
 
-                    RequestParams data = new RequestParams();
-                    data.add("user_id", user_id);
-                    data.add("item_id", item_id);
-                    data.add("store_id", store_id);
+                    for(int i=0; i < items_id.size(); i++) {
+                        final int counter = i;
+                        RequestParams data = new RequestParams();
+                        data.add("user_id", user_id);
+                        data.add("item_id", items_id.get(i).toString());
+                        data.add("store_id", store_id);
 
-                    Ajax.post("inventory/new", data, new JsonHttpResponseHandler(){
-                        @Override
-                        public void onStart() {
-                            progress.show();
-                        }
+                        Ajax.post("inventory/new", data, new JsonHttpResponseHandler(){
+                            @Override
+                            public void onStart() {
+                                progress.show();
+                            }
 
-                        @Override
-                        public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                            if (statusCode == 200) {
-                                if(response.length() > 0){
-                                    AppConfig.showDialog(PurchaseActivity.this, "Message", "Successfully bought drink!");
-                                    finish();
-                                }else{
-                                    AppConfig.showDialog(PurchaseActivity.this, "Message", "Request not send. Sorry. :(");
+                            @Override
+                            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                                if (statusCode == 200) {
+                                    if(response.length() > 0){
+                                        if(counter == items_id.size() - 1) {
+                                            AppConfig.showDialog(PurchaseActivity.this, "Message", "Successfully bought drink!");
+                                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                            startActivity(intent);
+                                        }
+                                    }else{
+                                        AppConfig.showDialog(PurchaseActivity.this, "Message", "Request not send. Sorry. :(");
+                                    }
+                                } else {
+                                    AppConfig.showDialog(PurchaseActivity.this, "Message", "There is problem in your request. Please try again.");
                                 }
-                            } else {
+                                Log.d("Result", response.toString());
+                            }
+
+                            @Override
+                            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                                Log.d("Failed: ", ""+statusCode);
+                                Log.d("Error : ", "" + throwable);
                                 AppConfig.showDialog(PurchaseActivity.this, "Message", "There is problem in your request. Please try again.");
                             }
-                            Log.d("Result", response.toString());
-                        }
 
-                        @Override
-                        public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                            Log.d("Failed: ", ""+statusCode);
-                            Log.d("Error : ", "" + throwable);
-                            AppConfig.showDialog(PurchaseActivity.this, "Message", "There is problem in your request. Please try again.");
-                        }
-
-                        @Override
-                        public void onFinish() {
-                            progress.dismiss();
-                        }
-                    });
+                            @Override
+                            public void onFinish() {
+                                progress.dismiss();
+                            }
+                        });
+                    }
                 } else {
                     AppConfig.showDialog(PurchaseActivity.this, "Required", "Username and password are required.");
                 }

@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -48,6 +49,7 @@ public class InventoryAdapter extends BaseAdapter {
         public TextView store;
         public TextView qty;
         public ImageView logo;
+        public ImageView item_cart;
         public Inventory inventory;
     }
 
@@ -67,6 +69,7 @@ public class InventoryAdapter extends BaseAdapter {
             holder.store = (TextView)convertView.findViewById(R.id.store);
             holder.qty = (TextView)convertView.findViewById(R.id.item_qty);
             holder.logo = (ImageView) convertView.findViewById(R.id.item_logo);
+            holder.item_cart = (ImageView) convertView.findViewById(R.id.item_cart);
             holder.inventory = null;
             convertView.setTag(holder);
         } else {
@@ -78,6 +81,7 @@ public class InventoryAdapter extends BaseAdapter {
         holder.brand.setText(i.brand);
         holder.store.setText(i.store_name + " @ " + i.store_address);
         holder.qty.setText("");
+        holder.item_cart.setVisibility(View.GONE);
         // TODO: set logo
         // holder.logo ??
         return convertView;
