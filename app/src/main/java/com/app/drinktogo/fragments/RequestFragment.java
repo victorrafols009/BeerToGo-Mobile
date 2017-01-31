@@ -5,6 +5,8 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -112,6 +114,15 @@ public class RequestFragment extends ListFragment {
                                     if (statusCode == 200) {
                                         if (response.length() > 0) {
                                             dialog.dismiss();
+
+                                            FragmentManager fm = getActivity().getSupportFragmentManager();
+                                            FragmentTransaction ft = fm.beginTransaction();
+                                            Bundle args = new Bundle();
+                                            args.putInt("user_id", user_id);
+                                            RequestFragment requestFragment = new RequestFragment();
+                                            requestFragment.setArguments(args);
+                                            ft.replace(R.id.fragment_container, requestFragment, "REQUEST_FRAGMENT");
+                                            ft.commit();
                                         } else {
                                             AppConfig.showDialog(getActivity(), "Message", "Approval not send. Sorry. :(");
                                         }

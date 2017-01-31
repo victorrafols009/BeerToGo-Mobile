@@ -29,8 +29,11 @@ import android.widget.Toast;
 
 import com.app.drinktogo.Entity.Request;
 import com.app.drinktogo.Entity.User;
+import com.app.drinktogo.fragments.CustomerFragment;
 import com.app.drinktogo.fragments.CustomerListFragment;
+import com.app.drinktogo.fragments.FriendFragment;
 import com.app.drinktogo.fragments.FriendListFragment;
+import com.app.drinktogo.fragments.ItemListFragment;
 import com.app.drinktogo.fragments.NotificationFragment;
 import com.app.drinktogo.fragments.RequestFragment;
 import com.app.drinktogo.fragments.StoreListFragment;
@@ -99,11 +102,12 @@ public class MainActivity extends AppCompatActivity
             full_name.setText(data.getString("full_name"));
             email.setText(data.getString("email"));
 
+            Menu navMenu = navigationView.getMenu();
             if (data.getInt("store_id") == 0) {
-                Menu navMenu = navigationView.getMenu();
                 navMenu.findItem(R.id.qrcode).setVisible(false);
                 navMenu.findItem(R.id.customers).setVisible(false);
             }
+            navMenu.findItem(R.id.message).setVisible(false);
 
             getSupportActionBar().setTitle("Your Profile");
         } catch (JSONException e) {
@@ -122,8 +126,18 @@ public class MainActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            int fragmentCount = getSupportFragmentManager().getBackStackEntryCount();
-            if(fragmentCount == 1) {
+            FragmentManager fm = getSupportFragmentManager();
+            FragmentTransaction ft = fm.beginTransaction();
+            Bundle args = new Bundle();
+
+            try {
+                args.putInt("user_id", user_json.getInt("id"));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            Fragment currFragment = fm.findFragmentById(R.id.fragment_container);
+            if(currFragment instanceof ProfileFragment) {
                 if (doubleBackToExitPressedOnce) {
                     finish();
                 }
@@ -137,13 +151,32 @@ public class MainActivity extends AppCompatActivity
                         doubleBackToExitPressedOnce = false;
                     }
                 }, 3500);
-            } else if(fragmentCount > 1) {
-                getSupportFragmentManager().popBackStack();
-//                Fragment fragment = getSupportFragmentManager().getFragments().get(fragmentCount);
-//                fragment.onResume();
+            } else if(currFragment instanceof ItemListFragment) {
+                getSupportActionBar().setTitle("Store List");
+
+                StoreListFragment storeListFragment = new StoreListFragment();
+                storeListFragment.setArguments(args);
+                ft.replace(R.id.fragment_container, storeListFragment, "STORE_LIST_FRAGMENT");
+            } else if(currFragment instanceof FriendFragment) {
+                getSupportActionBar().setTitle("Friend List");
+
+                FriendListFragment friendListFragment = new FriendListFragment();
+                friendListFragment.setArguments(args);
+                ft.replace(R.id.fragment_container, friendListFragment, "FRIEND_LIST_FRAGMENT");
+            } else if(currFragment instanceof CustomerFragment) {
+                getSupportActionBar().setTitle("Customers");
+
+                CustomerListFragment customerListFragment = new CustomerListFragment();
+                customerListFragment.setArguments(args);
+                ft.replace(R.id.fragment_container, customerListFragment, "CUSTOMER_LIST_FRAGMENT");
             } else {
-                super.onBackPressed();
+                getSupportActionBar().setTitle("Your Profile");
+
+                ProfileFragment profileFragment = new ProfileFragment();
+                profileFragment.setArguments(args);
+                ft.replace(R.id.fragment_container, profileFragment, "PROFILE_FRAGMENT");
             }
+            ft.commit();
         }
     }
 
@@ -208,110 +241,47 @@ public class MainActivity extends AppCompatActivity
         FragmentTransaction ft = fm.beginTransaction();
         Bundle args = new Bundle();
 
+        try {
+            args.putInt("user_id", user_json.getInt("id"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
         switch (FRAGMENT_TAG){
 
             case CUSTOMER_LIST_FRAGMENT:
-                CustomerListFragment customerListFragment = (CustomerListFragment) getSupportFragmentManager().findFragmentByTag(FRAGMENT_TAG);
-                try {
-                    args.putInt("user_id", user_json.getInt("id"));
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                if (customerListFragment != null && customerListFragment.isVisible()) {
-                    ft.replace(R.id.fragment_container, customerListFragment, FRAGMENT_TAG);
-                }else{
-                    CustomerListFragment frag = new CustomerListFragment();
-                    frag.setArguments(args);
-                    ft.add(R.id.fragment_container, frag, FRAGMENT_TAG).addToBackStack(FRAGMENT_TAG);
-                }
+                CustomerListFragment customerListFragment = new CustomerListFragment();
+                customerListFragment.setArguments(args);
+                ft.replace(R.id.fragment_container, customerListFragment, FRAGMENT_TAG);
                 break;
             case REQUEST_FRAGMENT:
-                RequestFragment requestFragment = (RequestFragment) getSupportFragmentManager().findFragmentByTag(FRAGMENT_TAG);
-                try {
-                    args.putInt("user_id", user_json.getInt("id"));
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                if (requestFragment != null && requestFragment.isVisible()) {
-                    ft.replace(R.id.fragment_container, requestFragment, FRAGMENT_TAG);
-                }else{
-                    RequestFragment frag = new RequestFragment();
-                    frag.setArguments(args);
-                    ft.add(R.id.fragment_container, frag, FRAGMENT_TAG).addToBackStack(FRAGMENT_TAG);
-                }
+                RequestFragment requestFragment = new RequestFragment();
+                requestFragment.setArguments(args);
+                ft.replace(R.id.fragment_container, requestFragment, FRAGMENT_TAG);
                 break;
 
             case NOTIFICATION_FRAGMENT:
-                NotificationFragment notificationFragment = (NotificationFragment) getSupportFragmentManager().findFragmentByTag(FRAGMENT_TAG);
-                try {
-                    args.putInt("user_id", user_json.getInt("id"));
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                if (notificationFragment != null && notificationFragment.isVisible()) {
-                    ft.replace(R.id.fragment_container, notificationFragment, FRAGMENT_TAG);
-                }else{
-                    NotificationFragment frag = new NotificationFragment();
-                    frag.setArguments(args);
-                    ft.add(R.id.fragment_container, frag, FRAGMENT_TAG).addToBackStack(FRAGMENT_TAG);
-                }
+                NotificationFragment notificationFragment = new NotificationFragment();
+                notificationFragment.setArguments(args);
+                ft.replace(R.id.fragment_container, notificationFragment, FRAGMENT_TAG);
                 break;
 
             case PROFILE_FRAGMENT:
-//                this comment part is the solution for reloading of fragment... upon backpress is not supported
-//                try {
-//                    args.putInt("user_id", user_json.getInt("id"));
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//                ProfileFragment profileFragment = new ProfileFragment();
-//                profileFragment.setArguments(args);
-//                ft.replace(R.id.fragment_container, profileFragment, FRAGMENT_TAG);
-                ProfileFragment profileFragment = (ProfileFragment) getSupportFragmentManager().findFragmentByTag(FRAGMENT_TAG);
-                try {
-                    args.putInt("user_id", user_json.getInt("id"));
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                if (profileFragment != null && profileFragment.isVisible()) {
-                    ft.replace(R.id.fragment_container, profileFragment, FRAGMENT_TAG);
-                }else{
-                    ProfileFragment frag = new ProfileFragment();
-                    frag.setArguments(args);
-                    ft.add(R.id.fragment_container, frag, FRAGMENT_TAG).addToBackStack(FRAGMENT_TAG);
-                }
+                ProfileFragment profileFragment = new ProfileFragment();
+                profileFragment.setArguments(args);
+                ft.replace(R.id.fragment_container, profileFragment, FRAGMENT_TAG);
                 break;
 
             case STORE_LIST_FRAGMENT:
-                StoreListFragment storeFragment = (StoreListFragment) getSupportFragmentManager().findFragmentByTag(FRAGMENT_TAG);
-                try {
-                    args.putInt("user_id", user_json.getInt("id"));
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                if (storeFragment != null && storeFragment.isVisible()) {
-                    ft.replace(R.id.fragment_container, storeFragment, FRAGMENT_TAG);
-                }else{
-                    StoreListFragment frag = new StoreListFragment();
-                    frag.setArguments(args);
-                    ft.add(R.id.fragment_container, frag, FRAGMENT_TAG).addToBackStack(FRAGMENT_TAG);
-                }
+                StoreListFragment storeListFragment = new StoreListFragment();
+                storeListFragment.setArguments(args);
+                ft.replace(R.id.fragment_container, storeListFragment, FRAGMENT_TAG);
                 break;
 
             case FRIEND_LIST_FRAGMENT:
-                FriendListFragment friendFragment = (FriendListFragment) getSupportFragmentManager().findFragmentByTag(FRAGMENT_TAG);
-                try {
-                    args.putInt("user_id", user_json.getInt("id"));
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                if (friendFragment != null && friendFragment.isVisible()) {
-                    ft.replace(R.id.fragment_container, friendFragment, FRAGMENT_TAG);
-                }else{
-                    FriendListFragment frag = new FriendListFragment();
-                    frag.setArguments(args);
-                    ft.add(R.id.fragment_container, frag, FRAGMENT_TAG).addToBackStack(FRAGMENT_TAG);
-                }
+                FriendListFragment friendListFragment = new FriendListFragment();
+                friendListFragment.setArguments(args);
+                ft.replace(R.id.fragment_container, friendListFragment, FRAGMENT_TAG);
                 break;
         }
         ft.commit();

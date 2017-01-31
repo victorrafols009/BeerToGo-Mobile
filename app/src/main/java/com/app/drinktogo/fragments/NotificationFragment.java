@@ -1,6 +1,8 @@
 package com.app.drinktogo.fragments;
 
 import android.app.AlertDialog;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -78,6 +80,15 @@ public class NotificationFragment extends ListFragment {
                                 if (statusCode == 200) {
                                     if (response.length() > 0) {
                                         AppConfig.showDialog(getActivity(), "Message", "Successfully allowed to drink!");
+
+                                        FragmentManager fm = getActivity().getSupportFragmentManager();
+                                        FragmentTransaction ft = fm.beginTransaction();
+                                        Bundle args = new Bundle();
+                                        args.putInt("user_id", user_id);
+                                        NotificationFragment notificationFragment = new NotificationFragment();
+                                        notificationFragment.setArguments(args);
+                                        ft.replace(R.id.fragment_container, notificationFragment, "NOTIFICATION_FRAGMENT");
+                                        ft.commit();
                                     } else {
                                         AppConfig.showDialog(getActivity(), "Message", "Approval not send. Sorry. :(");
                                     }
@@ -116,6 +127,15 @@ public class NotificationFragment extends ListFragment {
                                 if (statusCode == 200) {
                                     if (response.length() > 0) {
                                         AppConfig.showDialog(getActivity(), "Message", "Successfully declined the drink!");
+
+                                        FragmentManager fm = getActivity().getSupportFragmentManager();
+                                        FragmentTransaction ft = fm.beginTransaction();
+                                        Bundle args = new Bundle();
+                                        args.putInt("user_id", user_id);
+                                        NotificationFragment notificationFragment = new NotificationFragment();
+                                        notificationFragment.setArguments(args);
+                                        ft.replace(R.id.fragment_container, notificationFragment, "NOTIFICATION_FRAGMENT");
+                                        ft.commit();
                                     } else {
                                         AppConfig.showDialog(getActivity(), "Message", "Declining not send. Sorry. :(");
                                     }
