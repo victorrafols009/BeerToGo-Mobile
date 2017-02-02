@@ -10,8 +10,8 @@ import android.support.v7.app.AlertDialog;
  */
 
 public class AppConfig {
-//    public static final String URL = "http://drinktogo.mybluemix.net/";
-    public static final String URL = "http://192.168.43.71:6001/";
+    public static final String URL = "http://drinktogo.mybluemix.net/";
+//    public static final String URL = "http://192.168.43.71:6001/";
 //    public static final String URL = "http://192.168.1.38:6001/";
 
     public static void showDialog(Activity activity, String title, String message){
